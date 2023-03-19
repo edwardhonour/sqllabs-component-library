@@ -1,0 +1,15 @@
+<div class="card" [style]="style">
+    <div class="card-header">
+        <div class="row align-items-center justify-items-end">
+            <div class="col-9 col-lg-10 col-xl-11"><div [class]="title_class" [style]="title_style">{{ title }}</div></div>
+            <div class="col-3 col-lg-2 col-xl-1 align-self-end float-end">
+                <button (click)="toggleClosed()" *ngIf="closed=='Y'" [class]="button_class" [style]="button_style">Open</button>
+                <button (click)="toggleClosed()" *ngIf="closed=='N'" [class]="button_class" [style]="button_style">Close</button>
+            </div>
+        </div>
+        <h2></h2>
+    </div>
+    <div *ngIf="closed=='N'" class="card-body p-2">
+        <ng-content></ng-content>
+    </div>
+</div>

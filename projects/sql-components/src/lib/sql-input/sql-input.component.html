@@ -1,0 +1,106 @@
+<div class="container-fluid">
+    <!-- mat appearance is outline -->
+    <div *ngIf="appearance=='outline'">
+      <!-- if new row -->
+          <div *ngIf="bs_row=='Y'" class="row">
+            <div [class]="bs_col">
+              <p *ngIf="top_label=='Y'">{{ label }}</p>
+              <mat-form-field 
+                [ngClass]="class" 
+                [style]="style" 
+                (change)="handleChange()"
+                appearance="outline">
+                  <mat-label>{{ label }}</mat-label>
+                  <input [(ngModel)]="value" matInput placeholder="{{ placeholder }}">
+                      <mat-icon matSuffix>{{ icon }}</mat-icon>
+                      <mat-hint>{{ hint }}</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+      <!-- if not new row but has bootstrap column-->
+      <div *ngIf="bs_row!='Y'&&bs_col!=''">
+        <div [class]="bs_col">
+          <p *ngIf="top_label=='Y'">{{ label }}</p>       
+          <mat-form-field 
+            [ngClass]="class" 
+            [style]="style" 
+            (change)="handleChange()"
+            appearance="outline">
+              <mat-label>{{ label }}</mat-label>
+              <input [(ngModel)]="value" matInput placeholder="{{ placeholder }}">
+                  <mat-icon matSuffix>{{ icon }}</mat-icon>
+                  <mat-hint>{{ hint }}</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+      <!-- if not new row and no bootstrap column -->
+      <div *ngIf="bs_row!='Y'&&bs_col==''">
+        <p *ngIf="top_label=='Y'">{{ label }}</p>
+          <mat-form-field 
+            [ngClass]="class" 
+            [style]="style" 
+            (change)="handleChange()"
+            appearance="outline">
+              <mat-label>{{ label }}</mat-label>
+              <input [(ngModel)]="value" matInput placeholder="{{ placeholder }}">
+                  <mat-icon matSuffix>{{ icon }}</mat-icon>
+                  <mat-hint>{{ hint }}</mat-hint>
+          </mat-form-field>
+      </div>
+    </div>
+    <!-- mat appearance is fill -->    
+    <div *ngIf="appearance=='fill'">
+      <!-- if new row -->
+      <div *ngIf="bs_row=='Y'" class="row">
+        <div [class]="bs_col">
+          <p *ngIf="top_label=='Y'">{{ label }}</p>
+          <mat-form-field 
+            [ngClass]="class" 
+            [style]="style" appearance="fill">
+              <mat-label>{{ label }}</mat-label>
+                <input [(ngModel)]="value"
+                  [(ngModel)]="value" 
+                  (change)="handleChange()"
+                  matInput 
+                  placeholder="{{ placeholder }}">
+                    <mat-icon matSuffix>{{ icon }}</mat-icon>
+                    <mat-hint>{{ hint }}</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+            <!-- if not new row but has bootstrap column-->
+            <div *ngIf="bs_row!='Y'&&bs_col!=''">
+              <div [class]="bs_col">
+                <p *ngIf="top_label=='Y'">{{ label }}</p>
+                <mat-form-field 
+                [ngClass]="class" 
+                [style]="style" appearance="fill">
+                  <mat-label>{{ label }}</mat-label>
+                    <input [(ngModel)]="value"
+                      [(ngModel)]="value" 
+                      (change)="handleChange()"
+                      matInput 
+                      placeholder="{{ placeholder }}">
+                        <mat-icon matSuffix>{{ icon }}</mat-icon>
+                        <mat-hint>{{ hint }}</mat-hint>
+              </mat-form-field>
+              </div>
+            </div>
+            <div *ngIf="bs_row!='Y'&&bs_col==''">
+              <p *ngIf="top_label=='Y'">{{ label }}</p>
+              <mat-form-field 
+              [ngClass]="class" 
+              [style]="style" appearance="fill">
+                <mat-label>{{ label }}</mat-label>
+                  <input [(ngModel)]="value"
+                    [(ngModel)]="value" 
+                    (change)="handleChange()"
+                    matInput 
+                    placeholder="{{ placeholder }}">
+                      <mat-icon matSuffix>{{ icon }}</mat-icon>
+                      <mat-hint>{{ hint }}</mat-hint>
+            </mat-form-field>
+          </div>
+
+    </div>
+</div>

@@ -1,0 +1,133 @@
+<!-- NOT A CARD FORMAT-->
+<div *ngIf="card!='Y'" [class]="container_class" [style]="container_style">
+    <div [class]="row_placeholder">
+        <div [class]="col_placeholder">
+            <div *ngIf="format.search=='TOP'" class="row m-1 p-3">
+                <div class="col-lg-6">
+                    Search: <input style="max-width:320px;" class="form-control" type="text" id="term" name="term" [(ngModel)]="term"> 
+                </div>
+            </div>
+            <div class="row p-2 mt-2 mb-2">
+                <div class="col-md-12">
+                    <h2>{{ title }}</h2>
+                </div>
+            </div>
+            <div *ngIf="format.buttons.length>0||format.search=='Y'" class="row m-1 p-3">
+                <div *ngIf="format.search=='Y'" class="col-lg-6">
+                    Search: <input style="max-width:320px;" class="form-control" type="text" id="term" name="term" [(ngModel)]="term"> 
+                </div>
+                <div class="col-md-2" *ngFor="let m of format.buttons">
+                    <button (click)="topButtonClick(m.value);" [class]="m.class" [style]="m.style" [innerHTML]="m.title"></button>
+                </div>
+            </div>
+            <table [class]="table_class" [style]="table_style">
+                <thead>
+                    <tr class="p-2">
+                        <ng-container *ngFor="let m of format.columns">
+                            <th *ngIf="m.type!='button'" class="p-2">{{ m.title }}</th>
+                            <th *ngIf="m.type=='button'" class="p-2"></th>
+                        </ng-container>         
+                        <th *ngIf="edit=='Y'"></th>  
+                    </tr>
+                </thead>
+            <tbody>
+                <ng-container *ngFor="let m of list | filter: term | paginate: { currentPage: p , itemsPerPage: format.pagesize }">
+                    <tr class="p-2">
+                        <ng-container *ngFor="let n of format.columns">
+                            <td (click)="rowClick(m)" *ngIf="n['type']=='data'" [innerHTML]="m[n['value']]" [class]="n['class']"></td>
+                            <td (click)="rowClick(m)" *ngIf="n['type']=='text'" [innerHTML]="n['value']" [class]="n['class']"></td>
+                            <td *ngIf="n['type']=='button'">
+                                <button (click)="buttonClick(m)" [class]="n.class" [innerHTML]="n.title"></button>
+                            </td>
+                        </ng-container>
+                        <td *ngIf="edit=='Y'">
+                            <button class="btn btn-light" (click)="editClick(m);">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        </td>
+                    </tr> 
+                    <tr *ngIf="m?.edit=='Y'">
+                        <td [colSpan]="format.columns.length">
+                            <ng-container *ngTemplateOutlet="contentTmpl"></ng-container>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody> 
+            </table>
+        <div *ngIf="format.pagination=='Y'">
+                <paging-controls (pageChange)="p = $event" [isItemsPerPage]="false"  
+                class="my-pagination"></paging-controls> 
+            </div> 
+        </div> <!-- col -->
+    </div> <!-- row -->
+</div> <!-- container -->
+<!-- CARD FORMAT-->
+<div *ngIf="card=='Y'" [class]="container_class" [style]="container_style">
+    <div [class]="row_placeholder">
+        <div [class]="col_placeholder">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row p-2 mt-2 mb-2">
+                        <div class="col-md-12">
+                            <h2>{{ title }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div *ngIf="format.search=='TOP'" class="row m-1 p-3">
+                        <div class="col-6">
+                            Search: <input style="max-width:320px;" class="form-control" type="text" id="term" name="term" [(ngModel)]="term"> 
+                        </div>
+                    </div>
+                    <div *ngIf="format.buttons.length>0||format.search=='Y'" class="row m-1 p-3">
+                        <div *ngIf="format.search=='Y'" class="col-lg-6">
+                            Search: <input style="max-width:320px;" class="form-control" type="text" id="term" name="term" [(ngModel)]="term"> 
+                        </div>
+                        <div class="col-md-2" *ngFor="let m of format.buttons">
+                            <button (click)="topButtonClick(m.value);" [class]="m.class" [style]="m.style" [innerHTML]="m.title"></button>
+                        </div>
+                    </div>
+                    <table [class]="table_class" [style]="table_style">
+                        <thead>
+                            <ng-container *ngFor="let m of format.columns">
+                                <th *ngIf="m.type!='button'" [style]="m.style" class="p-2">{{ m.title }}</th>
+                                <th *ngIf="m.type=='button'" [style]="m.style" class="p-2"></th>
+                            </ng-container>   
+                            <th *ngIf="edit=='Y'"></th>  
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let m of list | filter: term | paginate: { currentPage: p , itemsPerPage: format.pagesize }">
+                                <tr class="p-2">
+                                    <ng-container *ngFor="let n of format.columns">
+                                        <td (click)="rowClick(m)" [style]="m.style"  *ngIf="n['type']=='data'" [innerHTML]="m[n['value']]" [class]="n['class']"></td>
+                                        <td (click)="rowClick(m)" [style]="m.style"  *ngIf="n['type']=='text'" [innerHTML]="n['value']" [class]="n['class']"></td>
+                                        <td *ngIf="n['type']=='button'">
+                                            <button (click)="buttonClick(m)" [style]="m.style" [class]="n.class" [innerHTML]="n.title"></button>
+                                        </td>
+                                    </ng-container>
+                                    <td *ngIf="edit=='Y'" style="width:40px;">
+                                        <button class="btn btn-light" (click)="editClick(m);">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </button>
+                                    </td>
+                                </tr> 
+                                <tr *ngIf="m?.edit=='Y'">
+                                    <td [colSpan]="format.columns.length">
+                                        <ng-container *ngTemplateOutlet="contentTmpl"></ng-container>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody> 
+                    </table>
+                    <div *ngIf="format.pagination=='Y'">
+                            <paging-controls (pageChange)="p = $event" [isItemsPerPage]="false"  
+                            class="my-pagination"></paging-controls> 
+                    </div>
+                </div> <!-- card-body -->
+            </div> <!-- card --> 
+        </div>
+    </div>
+</div>
+<ng-template #contentTmpl>
+    <ng-content></ng-content>
+</ng-template>

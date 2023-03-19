@@ -1,0 +1,88 @@
+<div class="container-fluid">
+    <!-- mat appearance is outline -->
+    <div *ngIf="appearance=='outline'">
+      <!-- if new row -->
+          <div *ngIf="bs_row=='Y'" class="row">
+            <div [class]="bs_col">
+                <p *ngIf="top_label=='Y'">{{ label }}</p>
+                <mat-form-field appearance="outline" [style]="style" [class]="class">
+                  <mat-label>{{ label }}</mat-label>
+                  <textarea (change)="handleChange()" [(ngModel)]="value" matInput
+                            cdkTextareaAutosize
+                            #autosize="cdkTextareaAutosize"
+                            cdkAutosizeMinRows="{{ rows}}"
+                            cdkAutosizeMaxRows="{{ maxrows }}"></textarea>
+                </mat-form-field>  
+            </div>
+          </div>
+      <!-- if not new row but has bootstrap column-->
+      <div *ngIf="bs_row!='Y'&&bs_col!=''">
+        <div [class]="bs_col">
+            <p *ngIf="top_label=='Y'">{{ label }}</p>
+            <mat-form-field appearance="outline" [style]="style" [class]="class">
+              <mat-label>{{ label }}</mat-label>
+              <textarea (change)="handleChange()" [(ngModel)]="value" matInput
+                        cdkTextareaAutosize
+                        #autosize="cdkTextareaAutosize"
+                        cdkAutosizeMinRows="{{ rows}}"
+                        cdkAutosizeMaxRows="{{ maxrows }}"></textarea>
+            </mat-form-field>  
+        </div>
+      </div>
+      <!-- if not new row and no bootstrap column -->
+      <div *ngIf="bs_row!='Y'&&bs_col==''">
+        <p *ngIf="top_label=='Y'">{{ label }}</p>
+        <mat-form-field appearance="outline" [style]="style" [class]="class">
+          <mat-label>{{ label }}</mat-label>
+          <textarea (change)="handleChange()" [(ngModel)]="value" matInput
+                    cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="{{ rows}}"
+                    cdkAutosizeMaxRows="{{ maxrows }}"></textarea>
+        </mat-form-field>  
+      </div>
+    </div>
+    <!-- mat appearance is fill -->    
+    <div *ngIf="appearance=='fill'">
+      <!-- if new row -->
+      <div *ngIf="bs_row=='Y'" class="row">
+        <div [class]="bs_col">
+          <p *ngIf="top_label=='Y'">{{ label }}</p>
+          <mat-form-field appearance="fill" [style]="style" [class]="class">
+            <mat-label>{{ label }}</mat-label>
+            <textarea (change)="handleChange()" [(ngModel)]="value" matInput
+                      cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize"
+                      cdkAutosizeMinRows="{{ rows}}"
+                      cdkAutosizeMaxRows="{{ maxrows }}"></textarea>
+          </mat-form-field>  
+        </div>
+      </div>
+            <!-- if not new row but has bootstrap column-->
+            <div *ngIf="bs_row!='Y'&&bs_col!=''">
+              <div [class]="bs_col">
+                <p *ngIf="top_label=='Y'">{{ label }}</p>
+                <mat-form-field appearance="fill" [style]="style" [class]="class">
+                  <mat-label>{{ label }}</mat-label>
+                  <textarea (change)="handleChange()" [(ngModel)]="value" matInput
+                            cdkTextareaAutosize
+                            #autosize="cdkTextareaAutosize"
+                            cdkAutosizeMinRows="{{ rows}}"
+                            cdkAutosizeMaxRows="{{ maxrows }}"></textarea>
+                </mat-form-field>  
+              </div>
+            </div>
+            <div *ngIf="bs_row!='Y'&&bs_col==''">
+                <p *ngIf="top_label=='Y'">{{ label }}</p>
+                <mat-form-field appearance="fill" [style]="style" [class]="class">
+                  <mat-label>{{ label }}</mat-label>
+                  <textarea (change)="handleChange()" [(ngModel)]="value" matInput
+                            cdkTextareaAutosize
+                            #autosize="cdkTextareaAutosize"
+                            cdkAutosizeMinRows="{{ rows}}"
+                            cdkAutosizeMaxRows="{{ maxrows }}"></textarea>
+                </mat-form-field>  
+          </div>
+
+    </div>
+</div> 

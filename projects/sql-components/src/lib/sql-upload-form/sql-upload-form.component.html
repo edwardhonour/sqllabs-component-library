@@ -1,0 +1,23 @@
+<div class="card">
+    <div class="card-header">
+       <h2>{{ title }}</h2>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <ng-content></ng-content>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 p-3">
+            <input style="margin-left: 20px;" class="btn-dark btn" [formControl]="file" (change)="fileChange(index,$event)" type="file" placeholder="File">
+        </div>
+        <div class="col-6 p-3">
+            <button (click)="showUpload()" class="btn btn-light">
+                Cancel
+            </button>
+            <button style="margin-left:20px;" (click)="uploadFile()" class="btn btn-primary">
+                Upload
+            </button>
+        </div>
+    </div>
+</div>

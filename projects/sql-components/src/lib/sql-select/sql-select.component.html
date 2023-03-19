@@ -1,0 +1,164 @@
+<div class="container-fluid">
+    <!-- FILL Style -->
+    <div *ngIf="appearance=='fill'">
+        <div *ngIf="native=='Y'">
+            <!-- New Row -->
+            <div *ngIf="bs_row=='Y'" class="row">
+                <div [class]="bs_col">
+                    <p *ngIf="top_label=='Y'">{{ label }}</p>
+                    <mat-form-field appearance="fill" [style]="style" [class]="class">
+                        <mat-label>{{ label }}</mat-label>
+                        <select [(ngModel)]="value" (change)="handleChange()" matNativeControl [style]="style" [class]="class">
+                          <option *ngFor="let m of selectData" [value]="m.id">{{ m.option }}</option>
+                        </select>
+                      </mat-form-field>
+                </div>
+            </div>
+            <!-- No New Row but column -->
+            <div *ngIf="bs_row!='Y'&&bs_col!=''">
+                <div [class]="bs_col">
+                    <p *ngIf="top_label=='Y'">{{ label }}</p>
+                    <mat-form-field appearance="fill" [style]="style" [class]="class">
+                        <mat-label>{{ label }}</mat-label>
+                        <select [(ngModel)]="value"  matNativeControl (change)="handleChange()" [style]="style" [class]="class">
+                          <option *ngFor="let m of selectData" [value]="m.id">{{ m.option }}</option>
+                        </select>
+                      </mat-form-field>
+                </div>
+            </div>
+            <!-- No New Row and no column -->
+            <div *ngIf="bs_row!='Y'&&bs_col==''">
+                <p *ngIf="top_label=='Y'">{{ label }}</p>
+                <mat-form-field appearance="fill" [style]="style" [class]="class">
+                    <mat-label>{{ label }}</mat-label>
+                    <select  [(ngModel)]="value" matNativeControl (change)="handleChange()" [style]="style" [class]="class">
+                      <option *ngFor="let m of selectData" [value]="m.id">{{ m.option }}</option>
+                    </select>
+                  </mat-form-field>
+            </div>
+        </div>
+        <div *ngIf="native=='N'">
+            <!-- New Row -->
+            <div *ngIf="bs_row=='Y'" class="row">
+                <div [class]="bs_col">
+                    <p *ngIf="top_label=='Y'">{{ label }}</p>
+                    <mat-form-field appearance="fill" [style]="style" [class]="class">
+                        <mat-label>{{ label }}</mat-label>
+                        <mat-select  [(ngModel)]="value" (selectionChange)="handleChange()" [style]="style" [class]="class">
+                          <mat-option *ngFor="let m of selectData" [value]="m.id">
+                            {{ m.option }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                </div>
+            </div>
+            <!-- No New Row but column -->
+            <div *ngIf="bs_row!='Y'&&bs_col!=''">
+                <div [class]="bs_col">
+                    <p *ngIf="top_label=='Y'">{{ label }}</p>
+                    <mat-form-field appearance="fill"  [style]="style" [class]="class">
+                        <mat-label>{{ label }}</mat-label>
+                        <mat-select  [(ngModel)]="value" (selectionChange)="handleChange()" [style]="style" [class]="class">
+                          <mat-option *ngFor="let m of selectData" [value]="m.id">
+                            {{ m.option }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                </div>
+            </div>
+            <!-- No New Row and no column -->
+            <div *ngIf="bs_row!='Y'&&bs_col==''">
+                <p *ngIf="top_label=='Y'">{{ label }}</p>
+                <mat-form-field appearance="fill"  [style]="style" [class]="class">
+                    <mat-label>{{ label }}</mat-label>
+                    <mat-select  [(ngModel)]="value" (selectionChange)="handleChange()" [style]="style" [class]="class">
+                      <mat-option *ngFor="let m of selectData" [value]="m.id"  [style]="style" [class]="class">
+                        {{ m.option }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+        </div>
+    </div>
+   <!-- OUTLINE Style -->
+   <div *ngIf="appearance=='outline'">
+    <div *ngIf="native=='Y'">
+        <!-- New Row -->
+        <div *ngIf="bs_row=='Y'" class="row">
+            <div [class]="bs_col">
+                <p *ngIf="top_label=='Y'">{{ label }}</p>
+                <mat-form-field appearance="outline" [style]="style" [class]="class">
+                    <mat-label>{{ label }}</mat-label>
+                    <select  [(ngModel)]="value" matNativeControl  (change)="handleChange()" [style]="style" [class]="class">
+                      <option *ngFor="let m of selectData" [value]="m.id">{{ m.option }}</option>
+                    </select>
+                  </mat-form-field>
+            </div>
+        </div>
+        <!-- No New Row but column -->
+        <div *ngIf="bs_row!='Y'&&bs_col!=''">
+            <div [class]="bs_col">
+                <p *ngIf="top_label=='Y'">{{ label }}</p>
+                <mat-form-field appearance="outline" [style]="style" [class]="class">
+                    <mat-label>{{ label }}</mat-label>
+                    <select  [(ngModel)]="value" matNativeControl  (change)="handleChange()" [style]="style" [class]="class">
+                      <option *ngFor="let m of selectData" [value]="m.id">{{ m.option }}</option>
+                    </select>
+                  </mat-form-field>
+            </div>
+        </div>
+        <!-- No New Row and no column -->
+        <div *ngIf="bs_row!='Y'&&bs_col==''">
+            <p *ngIf="top_label=='Y'">{{ label }}</p>
+            <mat-form-field appearance="outline" [style]="style" [class]="class">
+                <mat-label>{{ label }}</mat-label>
+                <select  [(ngModel)]="value" matNativeControl  (change)="handleChange()" [style]="style" [class]="class">
+                  <option *ngFor="let m of selectData" [value]="m.id">{{ m.option }}</option>
+                </select>
+              </mat-form-field>
+        </div>
+    </div>
+    <div *ngIf="native=='N'">
+        <!-- New Row -->
+        <div *ngIf="bs_row=='Y'" class="row">
+            <div [class]="bs_col">
+                <p *ngIf="top_label=='Y'">{{ label }}</p>
+                <mat-form-field appearance="fill"  [style]="style" [class]="class">
+                    <mat-label>{{ label }}</mat-label>
+                    <mat-select  [(ngModel)]="value"  (selectionChange)="handleChange()" [style]="style" [class]="class">
+                      <mat-option *ngFor="let m of selectData" [value]="m.id">
+                        {{ m.option }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+        </div>
+        <!-- No New Row but column -->
+        <div *ngIf="bs_row!='Y'&&bs_col!=''">
+            <div [class]="bs_col">
+                <p *ngIf="top_label=='Y'">{{ label }}</p>
+                <mat-form-field appearance="outline"  [style]="style" [class]="class">
+                    <mat-label>{{ label }}</mat-label>
+                    <mat-select  [(ngModel)]="value"  (selectionChange)="handleChange()" [style]="style" [class]="class">
+                      <mat-option *ngFor="let m of selectData" [value]="m.id">
+                        {{ m.option }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+        </div>
+        <!-- No New Row and no column -->
+        <div *ngIf="bs_row!='Y'&&bs_col==''">
+            <p *ngIf="top_label=='Y'">{{ label }}</p>
+            <mat-form-field appearance="outline"  [style]="style" [class]="class">
+                <mat-label>{{ label }}</mat-label>
+                <mat-select  [(ngModel)]="value"  (selectionChange)="handleChange()" [style]="style" [class]="class">
+                  <mat-option *ngFor="let m of selectData" [value]="m.id">
+                    {{ m.option }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div>
+    </div>
+</div>
+</div>

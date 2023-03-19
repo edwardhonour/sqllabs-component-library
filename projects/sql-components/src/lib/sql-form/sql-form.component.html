@@ -1,0 +1,74 @@
+<!-- it is not a card-->
+<div *ngIf="card=='N'">
+    <!-- bs_row == 'Y' -->
+    <div *ngIf="bs_row=='Y'" class="row">
+        <div [class]="bs_col">
+            <ng-container *ngTemplateOutlet="contentTmpl"></ng-container>
+        </div>
+    </div>
+    <!-- bs_row == 'N' and bs_col exists -->
+    <div *ngIf="bs_row!='Y'&&bs_col!=''">
+        <div [class]="bs_col">
+            <ng-container *ngTemplateOutlet="contentTmpl"></ng-container>
+        </div>
+    </div>
+    <!-- bs_row == 'N' and bs_col exists -->
+    <div *ngIf="bs_row!='Y'&&bs_col==''">
+            <ng-container *ngTemplateOutlet="contentTmpl"></ng-container>
+    </div>
+</div>
+
+<!-- it is a card -->
+<div *ngIf="card=='Y'">
+    <div *ngIf="bs_row=='Y'" class="row">
+        <div [class]="bs_col">
+            <div class="card">
+                <div class="card-header">
+                    <h2>{{ title }}</h2>
+                </div>
+                <div class="card-body">
+                    <ng-container *ngTemplateOutlet="contentTmpl"></ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="bs_row!='Y'&&bs_col!=''">
+        <div [class]="bs_col">
+            <div class="card">
+                <div class="card-header p-2">
+                    <h2>{{ title }}</h2>
+                </div>
+                <div class="card-body">
+                    <ng-container *ngTemplateOutlet="contentTmpl"></ng-container>
+                </div>
+            </div>
+        </div>
+    </div>    
+    <div *ngIf="bs_row!='Y'&&bs_col==''">
+            <div class="card">
+                <div class="card-header">
+                    <h2 p-2>{{ title }}</h2>
+                </div>
+                <div class="card-body">
+                    <ng-container *ngTemplateOutlet="contentTmpl"></ng-container>
+                </div>
+            </div>
+    </div>    
+</div>
+
+<ng-template #contentTmpl>
+    <div *ngIf="showSuccessAlert=='Y'" class="alert alert-success" role="alert">
+        {{ this.errorMessage }}
+      </div>
+      <div *ngIf="showErrorAlert=='Y'" class="alert alert-danger" role="alert">
+        {{ this.errorMessage }}
+      </div>
+    <ng-content></ng-content>
+    <div *ngIf="showSuccessAlert=='Y'" class="alert alert-success" role="alert">
+        {{ this.errorMessage }}
+      </div>
+      <div *ngIf="showErrorAlert=='Y'" class="alert alert-danger" role="alert">
+        {{ this.errorMessage }}
+      </div>
+</ng-template>
+
