@@ -1,9 +1,16 @@
-<label id="example-radio-group-label">{{ label }}</label>
-<mat-radio-group
-  aria-labelledby="example-radio-group-label"
-  class="example-radio-group"
-  [(ngModel)]="value">
-  <mat-radio-button (click)="handleChange()" class="example-radio-button" *ngFor="let m of selectData" [value]="m.id">
-    {{ m.option }}
-  </mat-radio-button><br>
-</mat-radio-group>
+<div class="container-fluid p-2">
+  <div [class]="row_value">
+    <div [class]="col_value">
+      <label id="example-radio-group-label">{{ label }}</label>
+      <mat-radio-group
+        aria-labelledby="example-radio-group-label"
+        class="example-radio-group"
+        [(ngModel)]="value"
+        (ngModelChange)="handleChange()">
+        <mat-radio-button class="example-radio-button" *ngFor="let m of selectData" [value]="m.id">
+          {{ m.option }}
+        </mat-radio-button><p *ngIf="inline=='N'"><br></p>
+      </mat-radio-group>
+      </div>
+    </div>
+  </div>

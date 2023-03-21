@@ -19,3 +19,4 @@ export * from './lib/sql-panel/sql-panel.component';
 export * from './lib/sql-datepicker/sql-datepicker.component';
 export * from './lib/sql-upload-form/sql-upload-form.component';
 export * from './lib/sql-fullcalendar/sql-fullcalendar.component';
+export * from './lib/sql-submit/sql-submit.component';

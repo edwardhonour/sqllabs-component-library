@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpClientModule, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DataService {
+export class SQLDataService {
 
   public dataSubject = new BehaviorSubject<any>('{}');
   public pageSubject = new BehaviorSubject<any>('{}');
@@ -13,12 +13,19 @@ export class DataService {
   t: any;
   uid: any;
   url: any;
+  base: any;
   surl: any;
   un: any;
   role: any;
+  config: any;
 
-  constructor(private http: HttpClient) { 
-        this.url='https://myna-api.com/api/psp_router.php';
+  constructor(private http: HttpClient,  @Inject('WEBSERVER') private webserver: string) { 
+        if (webserver===''||webserver===undefined) {
+          alert("Missing Provider in module.ts. It should include: { provide: WEBSERVER, useValue: 'https://example.com/api/' }")
+        } else {
+          this.base=webserver;
+        }
+        this.url=this.base+'sqlrouter.php';
   }
 
   getLocalStorage() {
@@ -51,7 +58,7 @@ export class DataService {
       "uid": this.uid
     }
 
-  this.t= this.http.post("https://myna-api.com/api/getselect.php", data);
+  this.t= this.http.post(this.base+"getselect.php", data);
   return this.t;
 
   }
@@ -63,7 +70,7 @@ export class DataService {
       "uid": this.uid
     }
 
-    this.t= this.http.post("https://myna-api.com/api/ping.php", data);
+    this.t= this.http.post(this.base+"ping.php", data);
     return this.t;
   }
 
@@ -75,7 +82,7 @@ export class DataService {
       "uid": this.uid
     }
 
-  this.t= this.http.post("https://myna-api.com/api/getsql.php", data);
+  this.t= this.http.post(this.base+"getsql.php", data);
   return this.t;
 
   }
@@ -87,7 +94,7 @@ export class DataService {
       "uid": this.uid
     }
 
-  this.t= this.http.post("https://myna-api.com/api/postsql.php", data);
+  this.t= this.http.post(this.base+"postsql.php", data);
   return this.t;
 
   }
@@ -120,30 +127,6 @@ export class DataService {
 
   }
 
-  postLogin(username: any, password: any) {
-    const data = {
-      "q" : "login",
-      "username": username,
-      "password": password
-    }
-  console.log(data)
-  this.t= this.http.post(this.url, data);
-  return this.t;
-
-  }
-
-  getVerticalMenu() {
-    this.getLocalStorage()
-    const data = {
-      "q" : "vertical-menu",
-      "uid": this.uid,
-      "role": this.role
-    }
-  this.t= this.http.post("https://myna-api.com/api/psp-menu.php", data);
-  return this.t;
-
-  }
-
   getUser() {
     this.getLocalStorage()
     const data = {
@@ -167,22 +150,10 @@ export class DataService {
       "id": id
     }
 
-    this.t= this.http.post("https://myna-api.com/api/getforms.php", data);
+    this.t= this.http.post(this.base+"getforms.php", data);
     return this.t;
 
   }
-
-  getEnroll(token: any) {
-    this.getLocalStorage()
-    const data = {
-      "q" : "enroll",
-      "token": token
-    }
-
-  this.t= this.http.post("https://myna-api.com/api/enroll.php", data);
-  return this.t;
-
-}
 
 pushNotification(data: any) {
   this.dataSubject.next(data);
@@ -190,12 +161,6 @@ pushNotification(data: any) {
 
 pushPage(data: any) {
   this.pageSubject.next(data);
-}
-
-postTemplate(file_data:any) {
-  console.log(file_data);
-  this.t=this.http.post('https://myna-docs.com/api/upload_security_section.php',file_data);
-  return this.t;
 }
 
 }

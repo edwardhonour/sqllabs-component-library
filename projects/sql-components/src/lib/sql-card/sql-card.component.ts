@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit, DoCheck, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DataService } from '../data.service'; 
+import { SQLDataService } from '../data.service'; 
 
 @Component({
   selector: 'sql-card',

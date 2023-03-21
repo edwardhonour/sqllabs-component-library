@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit, DoCheck, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, OnDestroy, AfterViewInit, DoCheck, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SqlInputComponent } from '../sql-input/sql-input.component';
-import { DataService } from '../data.service';
+import { SQLDataService } from '../data.service';
 import { MatCommonModule } from '@angular/material/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { HttpClient, HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'sql-upload-form',
@@ -13,13 +14,14 @@ import { HttpClient, HttpClientJsonpModule, HttpClientModule } from '@angular/co
   templateUrl: './sql-upload-form.component.html',
   styleUrls: ['./sql-upload-form.component.css']
 })
-export class SqlUploadFormComponent implements OnInit, DoCheck, OnChanges, AfterViewInit {
+export class SqlUploadFormComponent implements OnInit, DoCheck, OnChanges, AfterViewInit, OnDestroy  {
   index: any;
   last_id: any = '';
+  myObs!: Subscription;
 
-  constructor(private _http: HttpClient, private _dataService: DataService) {
+  constructor(private _http: HttpClient, private _dataService: SQLDataService) {
       
-      this._dataService.dataSubject.subscribe(d => {
+      this.myObs = this._dataService.dataSubject.subscribe(d => {
         this.data=d;
         this.counter++;
         console.log('sql-form' + this.counter)
@@ -145,6 +147,8 @@ export class SqlUploadFormComponent implements OnInit, DoCheck, OnChanges, After
     });
     }
 
-}
-
+    ngOnDestroy(): void {
+      this.myObs.unsubscribe();
+    }
+  }
 

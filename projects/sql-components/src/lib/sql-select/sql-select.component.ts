@@ -1,12 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, DoCheck, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, OnChanges, DoCheck, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatFormFieldControl } from '@angular/material/form-field';
 import { MatInput, MatInputModule } from '@angular/material/input';
 import { MatIconModule  }  from '@angular/material/icon';
 import { MatOptionModule } from '@angular/material/core';
-import { DataService } from '../data.service'; 
+import { SQLDataService } from '../data.service'; 
 import { MatSelectModule } from '@angular/material/select';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'sql-select',
@@ -16,12 +17,14 @@ import { MatSelectModule } from '@angular/material/select';
   templateUrl: './sql-select.component.html',
   styleUrls: ['./sql-select.component.css']
 })
-export class SqlSelectComponent implements OnInit, AfterViewInit {
+export class SqlSelectComponent implements OnInit, AfterViewInit, OnDestroy  {
 
   value: any='';
   fieldData: any = '';
+  myObs!: Subscription;
+  myDataObs!: Subscription;
 
-  @Input() appearance: string = 'fill';
+  @Input() appearance: string = 'outline';
   @Input() native: any = 'Y';
   @Input() sql: string = '';
   @Input() handler: string = '';
@@ -43,8 +46,8 @@ export class SqlSelectComponent implements OnInit, AfterViewInit {
   change: EventEmitter<any> = new EventEmitter<any>();  
   
   formData: any;
-  constructor(private _dataService: DataService) { 
-    this._dataService.dataSubject.subscribe(d => {
+  constructor(private _dataService: SQLDataService) { 
+    this.myObs = this._dataService.dataSubject.subscribe(d => {
       this.data=d;
       this.fieldData = this.data;
       this.value = this.fieldData[this.col];
@@ -55,7 +58,7 @@ export class SqlSelectComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this._dataService.getSelect(this.sql, this.handler, this.fieldData).subscribe((data:any)=>{
+    this.myDataObs = this._dataService.getSelect(this.sql, this.handler, this.fieldData).subscribe((data:any)=>{
       this.selectData=data;
     });
   }
@@ -73,4 +76,8 @@ export class SqlSelectComponent implements OnInit, AfterViewInit {
      this._dataService.pushNotification(this.fieldData);
   }
 
+  ngOnDestroy(): void {
+    this.myObs.unsubscribe();
+    this.myDataObs.unsubscribe();
+  }
 }

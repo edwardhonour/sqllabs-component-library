@@ -3,18 +3,18 @@
     <!-- bs_row == 'Y' -->
     <div *ngIf="bs_row=='Y'" class="row">
         <div [class]="bs_col">
-            <ng-container *ngTemplateOutlet="footerTmpl"></ng-container>
+            <ng-container *ngTemplateOutlet="fullTmpl"></ng-container>
         </div>
     </div>
     <!-- bs_row == 'N' and bs_col exists -->
     <div *ngIf="bs_row!='Y'&&bs_col!=''">
         <div [class]="bs_col">
-            <ng-container *ngTemplateOutlet="footerTmpl"></ng-container>
+            <ng-container *ngTemplateOutlet="fullTmpl"></ng-container>
         </div>
     </div>
     <!-- bs_row == 'N' and bs_col exists -->
     <div *ngIf="bs_row!='Y'&&bs_col==''">
-            <ng-container *ngTemplateOutlet="footerTmpl"></ng-container>
+            <ng-container *ngTemplateOutlet="fullTmpl"></ng-container>
     </div>
 </div>
 
@@ -65,4 +65,8 @@
 
 <ng-template #headerTmpl>
     <ng-content select="[header]"></ng-content>
+</ng-template>
+
+<ng-template #fullTmpl>
+    <ng-content></ng-content>
 </ng-template>

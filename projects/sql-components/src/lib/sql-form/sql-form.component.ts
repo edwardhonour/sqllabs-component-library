@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit, DoCheck, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ViewChild, ElementRef, AfterViewInit, DoCheck, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DataService } from '../data.service';
+import { SQLDataService } from '../data.service';
 import { MatCommonModule } from '@angular/material/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'sql-form',
@@ -10,13 +11,14 @@ import { MatCommonModule } from '@angular/material/core';
   templateUrl: './sql-form.component.html',
   styleUrls: ['./sql-form.component.css']
 })
-export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewInit {
+export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewInit, OnDestroy  {
 
   last_id: any = '';
+  myObs!: Subscription;
 
-  constructor(private _dataService: DataService) {
+  constructor(private _dataService: SQLDataService) {
       
-      this._dataService.dataSubject.subscribe(d => {
+    this.myObs = this._dataService.dataSubject.subscribe(d => {
         this.data=d;
         this.counter++;
         console.log('sql-form' + this.counter)
@@ -81,11 +83,14 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
         this.errorMessage=data.error_message;
         this.errorMessage='Record Saved';
       }
-      this._dataService.pushNotification(data);
+      
       setTimeout(()=>{
         this.showErrorAlert='N';
         this.showSuccessAlert='N';
-      },5000);
+        this.data.refresh='Y';
+        this.data.submit='N';
+        this._dataService.pushNotification(data);
+      },1000);
 
     });
   }
@@ -98,4 +103,8 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
 
   }
 
+
+  ngOnDestroy(): void {
+    this.myObs.unsubscribe();
+  }
 }

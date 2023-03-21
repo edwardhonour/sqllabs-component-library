@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit, DoCheck, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, OnDestroy, EventEmitter, ViewChild, ElementRef, AfterViewInit, DoCheck, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DataService } from '../data.service'; 
+import { SQLDataService } from '../data.service'; 
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'sql-panel',
@@ -12,7 +13,7 @@ import { catchError } from 'rxjs/operators';
   templateUrl: './sql-panel.component.html',
   styleUrls: ['./sql-panel.component.css'],
 })
-export class SqlPanelComponent implements OnInit, DoCheck, OnChanges, AfterViewInit {
+export class SqlPanelComponent implements OnInit, DoCheck, OnChanges, AfterViewInit, OnDestroy  {
   
   //-- Inputs
   @Input() router: any = 'N';                             // does data come from Router.
@@ -27,6 +28,8 @@ export class SqlPanelComponent implements OnInit, DoCheck, OnChanges, AfterViewI
   @Input() title: any = "";                               // Title of the Panel.
   @Input() bs_row: any = 'Y';                             // Y means add a bootstrap row.
   @Input() bs_col: any = 'col-sm-12 col-lg-6 col-xl-4';   // What bootstrap columns.
+  myObs!: Subscription;
+  myDatgaObs!: Subscription;
 
   r: any;
   path: any;
@@ -39,7 +42,7 @@ export class SqlPanelComponent implements OnInit, DoCheck, OnChanges, AfterViewI
 
   public parameterValue: string = '';
 
-  constructor(private _dataService: DataService, 
+  constructor(private _dataService: SQLDataService, 
     private _router: Router,
     private _activatedRoute: ActivatedRoute) { }
 
@@ -48,25 +51,10 @@ export class SqlPanelComponent implements OnInit, DoCheck, OnChanges, AfterViewI
   }
       
   ngAfterViewInit() {
-
-    /*
-    if (this.router=='Y') {
-      this.path = '';
-      this.id='';
-      this.id2='';
-      this.id3='';
-    
-      if (this.state.url!==undefined) { 
-        this.path = this.state.url; 
-        const url = new URL(this.path);
-        console.log(url.href);
-      }
-    }
-*/
-    this._dataService.getSQL(this.sql, this.id).subscribe((data:any)=>{
+    this.myObs = this._dataService.getSQL(this.sql, this.id).subscribe((data:any)=>{
         this.data=data;
         console.log(this.data)
-        this._dataService.pageSubject.next(this.data[0]);        
+        this._dataService.pageSubject.next(this.data[0]);
      });
   }
   
@@ -78,4 +66,7 @@ export class SqlPanelComponent implements OnInit, DoCheck, OnChanges, AfterViewI
 
   }
 
+  ngOnDestroy(): void {
+    this.myObs.unsubscribe();
+  }
 }

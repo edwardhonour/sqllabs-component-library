@@ -1,26 +1,29 @@
-import { Component, OnInit, Input, Output, EventEmitter, 
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy,
   ContentChildren, ElementRef, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DataService } from '../data.service';
+import { SQLDataService } from '../data.service';
 import { Data } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { NgxTablePaginationModule} from 'ngx-table-pagination';
+import { NgxTablePaginationModule, PaginationComponent } from 'ngx-table-pagination';
+import { Subscription } from 'rxjs';
 
 @Component({
 selector: 'sql-table',
 standalone: true,
 imports: [CommonModule, 
-     FormsModule, 
+     FormsModule,
      NgxTablePaginationModule, 
      Ng2SearchPipeModule],
 templateUrl: './sql-table.component.html',
 styleUrls: ['./sql-table.component.css']
 })
-export class SqlTableComponent implements OnInit, AfterViewInit {
+export class SqlTableComponent implements OnInit, AfterViewInit, OnDestroy  {
 // 
 @ContentChildren('title') private title_list!: ElementRef;
 @ContentChildren('column') private column_list!: ElementRef[];
+myObs!: Subscription;
+myDataObs!: Subscription;
 
 // format: is built from ContentChildren and Input Parameters
 format: any = { title: '', search: '', class: '', style: '', columns: [], buttons: [] };
@@ -66,11 +69,20 @@ col_placeholder: any = 'col-12';
 
 counter: number = 0;
 
-constructor(private _dataService: DataService) {     
-  this._dataService.dataSubject.subscribe(d => {
+constructor(private _dataService: SQLDataService) {     
+  this.myObs = this._dataService.dataSubject.subscribe(d => {
     this.data=d;
     console.log('table');
     console.log(d)
+    console.log(this.data)
+    console.log('table');
+    console.log(d.refresh)
+    console.log(d.error_code)
+    console.log(d.action)
+    if (d.error_code===0) {
+      console.log('wtf')
+      this.tableRefresh();
+    }
   })
 }
 
@@ -139,9 +151,23 @@ this.column_list.forEach((e: ElementRef) => {
      this.format.columns.push(column_template);
 });
 
-this._dataService.getSQL(this.sql, this.id).subscribe((data:any)=>{
+this.myDataObs = this._dataService.getSQL(this.sql, this.id).subscribe((data:any)=>{
  this.list=data;
 });
 }
 
+tableRefresh() {
+  console.log('table refresh');
+  this.myDataObs.unsubscribe();
+  console.log(this.sql)
+  this.myDataObs = this._dataService.getSQL(this.sql, this.id).subscribe((data:any)=>{
+    this.list=data;
+    console.log(this.list);
+   });
+}
+
+ngOnDestroy(): void {
+  this.myObs.unsubscribe();
+  this.myDataObs.unsubscribe();
+}
 }
