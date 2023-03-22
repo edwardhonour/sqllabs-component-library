@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldControl } from '@angular/material/form-field';
+import { MatFormFieldAppearance, MatFormFieldControl } from '@angular/material/form-field';
 import { MatIconModule  }  from '@angular/material/icon';
 import { SQLDataService } from '../data.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -52,7 +52,7 @@ export class SqlDatepickerComponent  implements OnInit, AfterViewInit, OnDestroy
   @Input() icon: string = '';
   @Input() label: string = 'Label not set';
   @Input() placeholder: any = '';
-  @Input() appearance: string = 'outline';
+  @Input() appearance: MatFormFieldAppearance = 'outline';
   @Input() bs_row: any = 'Y';
   @Input() bs_col: any = 'col-12';
   @Input() top_label: any = 'N';

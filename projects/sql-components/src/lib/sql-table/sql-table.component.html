@@ -27,7 +27,6 @@
                             <th *ngIf="m.type!='button'" class="p-2">{{ m.title }}</th>
                             <th *ngIf="m.type=='button'" class="p-2"></th>
                         </ng-container>         
-                        <th *ngIf="edit=='Y'"></th>  
                     </tr>
                 </thead>
             <tbody>
@@ -40,17 +39,7 @@
                                 <button (click)="buttonClick(m)" [class]="n.class" [innerHTML]="n.title"></button>
                             </td>
                         </ng-container>
-                        <td *ngIf="edit=='Y'">
-                            <button class="btn btn-light" (click)="editClick(m);">
-                                <i class="bi bi-pencil-square"></i>
-                            </button>
-                        </td>
                     </tr> 
-                    <tr *ngIf="m?.edit=='Y'">
-                        <td [colSpan]="format.columns.length">
-                            <ng-container *ngTemplateOutlet="contentTmpl"></ng-container>
-                        </td>
-                    </tr>
                 </ng-container>
             </tbody> 
             </table>
@@ -93,7 +82,6 @@
                                 <th *ngIf="m.type!='button'" [style]="m.style" class="p-2">{{ m.title }}</th>
                                 <th *ngIf="m.type=='button'" [style]="m.style" class="p-2"></th>
                             </ng-container>   
-                            <th *ngIf="edit=='Y'"></th>  
                         </thead>
                         <tbody>
                             <ng-container *ngFor="let m of list | filter: term | paginate: { currentPage: p , itemsPerPage: format.pagesize }">
@@ -105,17 +93,7 @@
                                             <button (click)="buttonClick(m)" [style]="m.style" [class]="n.class" [innerHTML]="n.title"></button>
                                         </td>
                                     </ng-container>
-                                    <td *ngIf="edit=='Y'" style="width:40px;">
-                                        <button class="btn btn-light" (click)="editClick(m);">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </button>
-                                    </td>
                                 </tr> 
-                                <tr *ngIf="m?.edit=='Y'">
-                                    <td [colSpan]="format.columns.length">
-                                        <ng-container *ngTemplateOutlet="contentTmpl"></ng-container>
-                                    </td>
-                                </tr>
                             </ng-container>
                         </tbody> 
                     </table>
@@ -128,6 +106,3 @@
         </div>
     </div>
 </div>
-<ng-template #contentTmpl>
-    <ng-content></ng-content>
-</ng-template>

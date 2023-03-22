@@ -1,9 +1,8 @@
 <div class="container-fluid">
 <div [class]="row_value">
     <div [class]="col_value">
-    <div *ngIf="appearance=='fill'">
         <p *ngIf="top_label=='Y'">{{ label }}</p>
-        <mat-form-field appearance="fill">
+        <mat-form-field [appearance]="appearance">
         <mat-label>{{ label }}</mat-label>
         <input [(ngModel)]="value" matInput [matDatepicker]="picker"
                (dateChange)="handleChange()">
@@ -12,17 +11,5 @@
         <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
     </div>  
-    <div *ngIf="appearance=='outline'">
-        <p *ngIf="top_label=='Y'">{{ label }}</p>
-        <mat-form-field appearance="outline">
-        <mat-label>{{ label }}</mat-label>
-        <input [(ngModel)]="value" matInput [matDatepicker]="picker"
-               (dateChange)="handleChange()">
-        <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-    </div>  
-    </div>
     </div>
 </div>

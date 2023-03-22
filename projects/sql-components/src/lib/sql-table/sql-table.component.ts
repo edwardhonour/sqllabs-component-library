@@ -35,7 +35,9 @@ row_placeholder: any = 'row';
 col_placeholder: any = 'col-12';
 
 //-- Inputs
-@Input() data: any = '';                                // Use Data if data comes from function.
+data: any = '';
+@Input() use_parameters: any = 'N';
+@Input() function: any = '';                                // Use Data if data comes from function.
 @Input() sql: any = '';                                 // SQL that gets data.
 @Input() card: any = "Y";                               // Show the form in a card Y/N
 @Input() card_class: any = '';
@@ -51,7 +53,7 @@ col_placeholder: any = 'col-12';
 
 @Input() table_class: any = 'table table-striped table-condensed';   // class of the table.
 @Input() table_style: any = '';                                      // style of the table.
-@Input() edit: any = 'Y';                               // Add custom edit button.
+@Input() edit: any = 'N';                               // Add custom edit button.
 @Input() title: any = 'Title Not Set';                  // title of the page.
 @Input() pagination: any = 'Y';                         // Include pagination.
 @Input() pagesize: number = 25;                         // rows per page for pagination.
@@ -69,21 +71,8 @@ col_placeholder: any = 'col-12';
 
 counter: number = 0;
 
-constructor(private _dataService: SQLDataService) {     
-  this.myObs = this._dataService.dataSubject.subscribe(d => {
-    this.data=d;
-    console.log('table');
-    console.log(d)
-    console.log(this.data)
-    console.log('table');
-    console.log(d.refresh)
-    console.log(d.error_code)
-    console.log(d.action)
-    if (d.error_code===0) {
-      console.log('wtf')
-      this.tableRefresh();
-    }
-  })
+constructor(private _dataService: SQLDataService) { 
+
 }
 
 ngOnInit(): void {
@@ -98,15 +87,6 @@ rowClick(m: any) {
 this.row_click.emit(m);
 }
 
-editClick(m: any) {
-    if (m.edit==='Y') {
-        m.edit='N';
-    } else {
-        this._dataService.dataSubject.next(m);
-        m.edit='Y';
-    }
-}
-
 buttonClick(m: any) {
 this.button_click.emit(m);
 }
@@ -116,6 +96,7 @@ ngAfterViewInit(): void {
 this.format.title=this.title;
 this.format.class=this.class;
 this.format.style=this.style;
+this.format.pagination=this.pagination;
 this.format.pagesize=this.pagesize;
 if (this.bs_row=='Y') {
     this.row_placeholder="row";

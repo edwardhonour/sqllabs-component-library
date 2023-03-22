@@ -9,6 +9,8 @@ export class SQLDataService {
 
   public dataSubject = new BehaviorSubject<any>('{}');
   public pageSubject = new BehaviorSubject<any>('{}');
+  public paramSubject = new BehaviorSubject<any>('{}');
+  public routerSubject = new BehaviorSubject<any>('{}');
 
   t: any;
   uid: any;
@@ -25,7 +27,7 @@ export class SQLDataService {
         } else {
           this.base=webserver;
         }
-        this.url=this.base+'sqlrouter.php';
+        this.url=this.base+'sqlcomponents.php';
   }
 
   getLocalStorage() {
@@ -52,37 +54,38 @@ export class SQLDataService {
   getSelect(sql: any, f: any, form: any) {
     this.getLocalStorage();
     const data = {
-      "q" : f,
+      "q" : 'getselect',
       "sql": sql,   
       "form": form,   
       "uid": this.uid
     }
 
-  this.t= this.http.post(this.base+"getselect.php", data);
+  this.t= this.http.post(this.base+"sqlcomponents.php", data);
   return this.t;
 
   }
 
   pingParameters(path: any) {
     this.getLocalStorage();
-    const data = {  
+    const data = {
+      q: 'ping',  
       path: path,
       "uid": this.uid
     }
-
-    this.t= this.http.post(this.base+"ping.php", data);
+    this.t= this.http.post(this.base+"sqlcomponents.php", data);
     return this.t;
   }
 
   getSQL(sql: any, id: any) {
     this.getLocalStorage();
     const data = {
-      "id" : id,
+      "q": "getsql",
+      "parameters" : id,
       "sql": sql,     
       "uid": this.uid
     }
 
-  this.t= this.http.post(this.base+"getsql.php", data);
+  this.t= this.http.post(this.base+"sqlcomponents.php", data);
   return this.t;
 
   }
@@ -90,11 +93,12 @@ export class SQLDataService {
   postSQL(formData: any) {
     this.getLocalStorage();
     const data = {
+      "q": "postform",
       "data": formData,
       "uid": this.uid
     }
 
-  this.t= this.http.post(this.base+"postsql.php", data);
+  this.t= this.http.post(this.base+"sqlcomponents.php", data);
   return this.t;
 
   }
@@ -114,10 +118,10 @@ export class SQLDataService {
 
   }
 
-  postForm(formID: any, formData: any[]) {
+  postForm(formData: any[]) {
     this.getLocalStorage();
     const data = {
-      "q" : formID,
+      "q" : "postform",
       "data": formData,
       "uid": this.uid
     }
@@ -140,17 +144,15 @@ export class SQLDataService {
 
   }
   
-  getForm(table_name: any, id: any) {
+  getForm(table_name: any, parameters: any) {
     this.getLocalStorage()
     const data = {
-      "q" : "vertical-menu",
-      "uid": this.uid,
-      "role": this.role,
+      "q" : "getform",
       "table": table_name,
-      "id": id
+      "parameters": parameters
     }
 
-    this.t= this.http.post(this.base+"getforms.php", data);
+    this.t= this.http.post(this.base+"sqlcomponents.php", data);
     return this.t;
 
   }
@@ -161,6 +163,20 @@ pushNotification(data: any) {
 
 pushPage(data: any) {
   this.pageSubject.next(data);
+}
+
+getCalendar(sql: any, params: any) {
+      this.getLocalStorage();
+      const data = {
+        "q" : 'calendar',
+        "sql": sql,   
+        "parameters": params,   
+        "uid": this.uid
+      }
+
+    this.t= this.http.post(this.base+"sqlcomponents.php", data);
+    return this.t;
+
 }
 
 }

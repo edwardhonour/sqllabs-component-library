@@ -35,34 +35,29 @@ export class SqlEditTableComponent implements OnInit, AfterViewInit, OnDestroy  
   col_placeholder: any = 'col-12';
   
   //-- Inputs
+  @Input() use_parameters = 'N';
   @Input() data: any = '';                                // Use Data if data comes from function.
   @Input() sql: any = '';                                 // SQL that gets data.
   @Input() card: any = "Y";                               // Show the form in a card Y/N
   @Input() card_class: any = '';
   @Input() card_style: any = '';
   @Input() container_class: any = 'container-fluid m-2 p-2';              // Class of the outer ng-container.
-  @Input() container_style: any = '';                     // Style of the outer ng-container.
-  
+  @Input() container_style: any = '';                     // Style of the outer ng-container.  
   @Input() closable: any = "N";                           // Is the form closable Y/N
   @Input() search: any = 'TOP';                           // Location of the search box.
-  
   @Input() bs_row: any = 'Y';                             // Y means add a bootstrap row.
   @Input() bs_col: any = 'col-sm-12 col-lg-12 col-xl-12';   // What bootstrap columns.
-  
   @Input() table_class: any = 'table table-striped table-condensed';   // class of the table.
   @Input() table_style: any = '';                                      // style of the table.
   @Input() edit: any = 'Y';                               // Add custom edit button.
   @Input() title: any = 'Title Not Set';                  // title of the page.
   @Input() pagination: any = 'Y';                         // Include pagination.
   @Input() pagesize: number = 25;                         // rows per page for pagination.
-  
   @Input() id: any = '0';                                 // id for where clause.
-  
   @Input() open: any = "Y";                               // Does a closable list start open.
   @Input() class: any = 'table table-striped table-condensed';  // Class for the table container.
   @Input() style: any = "";                               // Style for the table container.
   @Input() handler: any = 'default';                      // what handler is used to process the form.
-  
   @Output() button_click: EventEmitter<any> = new EventEmitter<any>();
   @Output() row_click: EventEmitter<any> = new EventEmitter<any>();
   @Output() top_button_click: EventEmitter<any> = new EventEmitter<any>();
@@ -116,6 +111,7 @@ export class SqlEditTableComponent implements OnInit, AfterViewInit, OnDestroy  
   this.format.title=this.title;
   this.format.class=this.class;
   this.format.style=this.style;
+  this.format.pagination=this.pagination;
   this.format.pagesize=this.pagesize;
   if (this.bs_row=='Y') {
       this.row_placeholder="row";

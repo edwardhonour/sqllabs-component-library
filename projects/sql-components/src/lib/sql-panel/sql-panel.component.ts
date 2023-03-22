@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs';
 export class SqlPanelComponent implements OnInit, DoCheck, OnChanges, AfterViewInit, OnDestroy  {
   
   //-- Inputs
-  @Input() router: any = 'N';                             // does data come from Router.
+  @Input() use_parameters: any = 'N';                             // does data come from Router.
   @Input() data: any;                                     // Depreciated
   @Input() sql: any = "select 'x' from dual";             // query to populate panel.          
   @Input() id: any = '0';                                 // Primary key for query.

@@ -20,3 +20,5 @@ export * from './lib/sql-datepicker/sql-datepicker.component';
 export * from './lib/sql-upload-form/sql-upload-form.component';
 export * from './lib/sql-fullcalendar/sql-fullcalendar.component';
 export * from './lib/sql-submit/sql-submit.component';
+export * from './lib/sql-menu/sql-menu.component';
+export * from './lib/sql-data-menu/sql-data-menu.component';
