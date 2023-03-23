@@ -23,7 +23,9 @@ export class SqlFullcalendarComponent implements OnInit, DoCheck, OnChanges, Aft
   @Input() data: any;                                     // Depreciated
   @Input() sql: any = "select 'x' from dual";             // query to populate panel.          
   @Input() id: any = '0';                                 // Primary key for query.
-  @Input() card: any = "Y";                               // Show the panel in a card Y/N
+  @Input() id2: any = '0';  
+  @Input() id3: any = '0';  
+  @Input() carßd: any = "Y";                               // Show the panel in a card Y/N
   @Input() closable: any = "N";                           // Is the panel closable Y/N
   @Input() open: any = "Y";                               // Does a closable form start open.
   @Input() class: any = "";                               // Class for the panel container.
@@ -52,9 +54,6 @@ export class SqlFullcalendarComponent implements OnInit, DoCheck, OnChanges, Aft
 
   r: any;
   path: any;
-  //id: any;
-  id2: any;
-  id3: any;
 
   @Output() change: EventEmitter<any> = new EventEmitter<any>();
   counter: number = 0;
@@ -70,6 +69,9 @@ export class SqlFullcalendarComponent implements OnInit, DoCheck, OnChanges, Aft
   }
       
   ngAfterViewInit() {
+    this.params.id=this.id;
+    this.params.id2=this.id2;
+    this.params.id3=this.id3;
     this.myObj = this._dataService.getCalendar(this.sql, this.params).subscribe((data:any)=>{
         this.data=data;
         this.calendarOptions.events=this.data;

@@ -60,6 +60,7 @@ export class SqlCheckboxComponent implements OnInit, AfterViewInit, OnDestroy  {
   }
 
   formData: any;
+  
   constructor(private _dataService: SQLDataService) { 
     this.myObs = this._dataService.dataSubject.subscribe(d => {
       this.data=d;

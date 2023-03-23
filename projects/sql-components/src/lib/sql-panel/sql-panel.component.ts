@@ -20,6 +20,8 @@ export class SqlPanelComponent implements OnInit, DoCheck, OnChanges, AfterViewI
   @Input() data: any;                                     // Depreciated
   @Input() sql: any = "select 'x' from dual";             // query to populate panel.          
   @Input() id: any = '0';                                 // Primary key for query.
+  @Input() id2: any = '0'; 
+  @Input() id3: any = '0'; 
   @Input() card: any = "Y";                               // Show the panel in a card Y/N
   @Input() closable: any = "N";                           // Is the panel closable Y/N
   @Input() open: any = "Y";                               // Does a closable form start open.
@@ -33,9 +35,6 @@ export class SqlPanelComponent implements OnInit, DoCheck, OnChanges, AfterViewI
 
   r: any;
   path: any;
-  //id: any;
-  id2: any;
-  id3: any;
 
   @Output() change: EventEmitter<any> = new EventEmitter<any>();
   counter: number = 0;

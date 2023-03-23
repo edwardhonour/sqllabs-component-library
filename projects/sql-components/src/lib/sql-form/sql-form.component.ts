@@ -35,19 +35,19 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
    }
 
   //-- Inputs
-  @Input() data: any;                                     // Depreciated
-  @Input() id: any = '0';                                 // Primary key for an existing record = 0=Insert
-  @Input() table: any = "dual";                           // Name of the base table.
-  @Input() embedded: any = "N";                           // Is the form embedded in a list.
-  @Input() card: any = "Y";                               // Show the form in a card Y/N
-  @Input() closable: any = "N";                           // Is the form closable Y/N
-  @Input() open: any = "Y";                               // Does a closable form start open.
-  @Input() class: any = "";                               // Class for the form container.
-  @Input() style: any = "";                               // Style for the form container.
-  @Input() title: any = "";                               // Title of the form.
-  @Input() bs_row: any = 'Y';                             // Y means add a bootstrap row.
-  @Input() bs_col: any = 'col-sm-12 col-lg-6 col-xl-4';   // What bootstrap columns.
-  @Input() handler: any = 'default';                      // what handler is used to process the form.
+  @Input() data: any;                                     
+  @Input() id: any = '0';                                
+  @Input() table: any = "dual";                           
+  @Input() embedded: any = "N";                          
+  @Input() card: any = "Y";                               
+  @Input() closable: any = "N";                           
+  @Input() open: any = "Y";                               
+  @Input() class: any = "";                              
+  @Input() style: any = "";                              
+  @Input() title: any = "";                              
+  @Input() bs_row: any = 'Y';                             
+  @Input() bs_col: any = 'col-sm-12 col-lg-6 col-xl-4';   
+  @Input() handler: any = 'default';                      
 
   @Output() change: EventEmitter<any> = new EventEmitter<any>();
   @Output() saved: EventEmitter<any> = new EventEmitter<any>();

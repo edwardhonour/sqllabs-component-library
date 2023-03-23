@@ -42,7 +42,6 @@ export class SqlRadioGroupComponent implements OnInit, AfterViewInit, OnDestroy 
   @Input() icon: string = '';
   @Input() label: string = 'Label not set';
   @Input() placeholder: any = '';
-
   @Input() bs_row: any = 'Y';
   @Input() bs_col: any = 'col-12';
   @Input() top_label: any = 'N';
