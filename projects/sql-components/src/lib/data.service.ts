@@ -20,6 +20,7 @@ export class SQLDataService {
   un: any;
   role: any;
   config: any;
+  counter: number = 0;
 
   constructor(private http: HttpClient,  @Inject('WEBSERVER') private webserver: string) { 
         if (webserver===''||webserver===undefined) {
@@ -77,17 +78,20 @@ export class SQLDataService {
   }
 
   getSQL(sql: any, id: any) {
+    this.counter++;
+    console.log(this.counter);
     this.getLocalStorage();
     const data = {
+      "counter": this.counter,
       "q": "getsql",
       "parameters" : id,
       "sql": sql,     
-      "uid": this.uid
+      "uid": this.uid,
     }
-
-  this.t= this.http.post(this.base+"sqlcomponents.php", data);
-  return this.t;
-
+    if (this.counter!=2) {
+      this.t= this.http.post(this.base+"sqlcomponents.php", data);
+      return this.t;
+    }
   }
 
   getMenu(sql: any, id: any) {
