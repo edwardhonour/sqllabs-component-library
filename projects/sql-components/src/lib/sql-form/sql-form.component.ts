@@ -25,7 +25,7 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
         if (this.data.id!=this.last_id) {
           this.last_id=this.data.id;
           this.id=this.data.id;
-          this.ngAfterViewInit();
+          //this.ngAfterViewInit();
         }
         if (this.data.submit==='Y') {
           this.postSQL();

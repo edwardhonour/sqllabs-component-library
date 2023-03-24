@@ -97,7 +97,7 @@ this.button_click.emit(m);
 
 ngAfterViewInit(): void {
 
-  if (this.use_parameters=='Y') {
+  if (this.use_parameters==='Y') {
     this._dataService.paramSubject.subscribe(d => {
       this.parameters=d;
       this._dataService.getSQL(this.sql, this.parameters).subscribe((data:any)=>{
@@ -107,12 +107,13 @@ ngAfterViewInit(): void {
         });
        });
     })
-  } else {
+  } 
+  if (this.use_parameters==='N') {
       this.parameters.page=this.page;
       this.parameters.id=this.id;
       this.parameters.id2=this.id2;
       this.parameters.id3=this.id3;
-      this._dataService.getMenu(this.sql, this.parameters).subscribe((data:any)=>{
+      this._dataService.getSQL(this.sql, this.parameters).subscribe((data:any)=>{
         this.list=data;
         this.list.forEach(function (value: any) {
           value.active='N';
