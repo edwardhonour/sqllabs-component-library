@@ -45,13 +45,9 @@ export class SqlInputComponent implements OnInit, AfterViewInit, OnDestroy  {
   constructor(private _dataService: SQLDataService) { 
     this.myObs = this._dataService.dataSubject.subscribe(d => {
       this.data=d;
-      console.log('Starting SQL Input: ' + this.col)
-      console.log(d)
       this.fieldData = this.data;
       this.value = this.fieldData[this.col];
       this.counter++;
-      console.log('sql-input: ' + this.value)
-
     })
   }
 

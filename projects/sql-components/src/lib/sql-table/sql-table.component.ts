@@ -161,6 +161,10 @@ this.column_list.forEach((e: ElementRef) => {
      this.format.columns.push(column_template);
 });
 
+console.log('last parameters was')
+console.log(this.last_parameters);
+console.log('parameters was')
+console.log(this.parameters);
 if (this.last_parameters.page!=this.parameters.page||
     this.last_parameters.id!=this.parameters.id||
     this.last_parameters.id2!=this.parameters.id2||
@@ -169,6 +173,10 @@ if (this.last_parameters.page!=this.parameters.page||
           this.last_parameters.id=this.parameters.id;
           this.last_parameters.id2=this.parameters.id2;
           this.last_parameters.id3=this.parameters.id3;
+          console.log('new last parameters')
+          console.log(this.last_parameters)
+          console.log('new parameters')
+          console.log(this.parameters)
           this.myDataObs = this._dataService.getSQL(this.sql, this.parameters).subscribe((data:any)=>{
             this.list=data;
           });
