@@ -71,6 +71,7 @@ data: any = '';
 @Output() row_click: EventEmitter<any> = new EventEmitter<any>();
 @Output() top_button_click: EventEmitter<any> = new EventEmitter<any>();
 parameters: any = { page: '', id: '', id2: '', id3: ''};
+last_parameters: any = { page: 'xxx', id: 'xxx', id2: 'xxx', id3: 'xxx' }
 
 counter: number = 0;
 page: any = '';
@@ -160,9 +161,18 @@ this.column_list.forEach((e: ElementRef) => {
      this.format.columns.push(column_template);
 });
 
-this.myDataObs = this._dataService.getSQL(this.sql, this.parameters).subscribe((data:any)=>{
- this.list=data;
-});
+if (this.last_parameters.page!=this.parameters.page||
+    this.last_parameters.id!=this.parameters.id||
+    this.last_parameters.id2!=this.parameters.id2||
+    this.last_parameters.id3!=this.parameters.id3) {
+          this.last_parameters.page=this.parameters.page;
+          this.last_parameters.id=this.parameters.id;
+          this.last_parameters.id2=this.parameters.id2;
+          this.last_parameters.id3=this.parameters.id3;
+          this.myDataObs = this._dataService.getSQL(this.sql, this.parameters).subscribe((data:any)=>{
+            this.list=data;
+          });
+    }
 }
 
 tableRefresh() {
