@@ -39,9 +39,7 @@ export class SqlFullcalendarComponent implements OnInit, DoCheck, OnChanges, Aft
   myObj!: Subscription;
 
   handleDateClick(arg:any) {
-    console.log(arg.event._def.publicId)
-    console.log('date click')
-    console.log(arg)
+
   }
 
   calendarOptions: CalendarOptions = {

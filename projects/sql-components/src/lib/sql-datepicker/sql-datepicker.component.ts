@@ -73,7 +73,6 @@ export class SqlDatepickerComponent  implements OnInit, AfterViewInit, OnDestroy
   }
 
   ngAfterViewInit() {
-    console.log('AVI in sql-input')
   
   }
 
@@ -84,8 +83,6 @@ export class SqlDatepickerComponent  implements OnInit, AfterViewInit, OnDestroy
       this.fieldData = this.data;
       this.value = this.fieldData[this.col];
       this.counter++;
-      console.log('sql-input: ' + this.counter)
-      console.log(d)
     })
   }
 
@@ -103,13 +100,8 @@ export class SqlDatepickerComponent  implements OnInit, AfterViewInit, OnDestroy
    }
 
   handleChange() {
-     console.log('sql-datepicker change')
-     console.log(this.datePipe.transform(this.value, 'yyyy-MM-dd'))
      this.fieldData['submit']='N';
      this.fieldData[this.col]=this.datePipe.transform(this.value, 'yyyy-MM-dd');
-     console.log(this.fieldData)
-     console.log('sql-datepicker')
-     console.log(this.fieldData)
      this._dataService.pushNotification(this.fieldData);
   }
 

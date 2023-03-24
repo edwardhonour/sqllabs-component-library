@@ -36,7 +36,15 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
 
   //-- Inputs
   @Input() data: any;                                     
-  @Input() id: any = '0';                                
+  @Input() id: any = '0';         
+  @Input() id2: any = '0';         
+  @Input() id3: any = '0';
+  @Input() default_col: any = '';  
+  @Input() default_col2: any = '';  
+  @Input() default_col3: any = '';   
+  @Input() default_value: any = '';  
+  @Input() default_value2: any = '';  
+  @Input() default_value3: any = '';            
   @Input() table: any = "dual";                           
   @Input() embedded: any = "N";                          
   @Input() card: any = "Y";                               
@@ -48,6 +56,8 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
   @Input() bs_row: any = 'Y';                             
   @Input() bs_col: any = 'col-sm-12 col-lg-6 col-xl-4';   
   @Input() handler: any = 'default';                      
+
+  parameters: any = { page: '', id: '', id2: '', id3: ''};
 
   @Output() change: EventEmitter<any> = new EventEmitter<any>();
   @Output() saved: EventEmitter<any> = new EventEmitter<any>();
@@ -61,14 +71,23 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
   }
 
   ngAfterViewInit(): void {
+      console.log('sql-form after view init')
       if (this.embedded=='Y') {
         this.id==this.data.id;
+      } else {
+
       }
-      this._dataService.getForm(this.table, this.id).subscribe((data:any)=>{
-        this.data=data;
-        console.log('pushing first query')
+      this.parameters.id=this.id;
+
+      if (this.table!='dual') {
+        this._dataService.getForm(this.table, this.parameters).subscribe((data:any)=>{
+            this.data=data;
+            if (this.default_col!='') { this.data[this.default_col]=this.default_value }
+            if (this.default_col2!='') { this.data[this.default_col2]=this.default_value2 }        
+            if (this.default_col3!='') { this.data[this.default_col3]=this.default_value3 }                
         this._dataService.pushNotification(this.data);
       });
+    }
   }
 
   postSQL() {

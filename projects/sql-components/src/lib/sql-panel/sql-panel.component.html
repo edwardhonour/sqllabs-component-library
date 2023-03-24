@@ -23,7 +23,7 @@
     <div *ngIf="bs_row=='Y'" class="row">
         <div [class]="bs_col">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" style="margin-top: 0px;">
                     <h2 *ngIf="title!=''" p-2>{{ title }}</h2>
                     <ng-container *ngTemplateOutlet="headerTmpl"></ng-container>
                 </div>

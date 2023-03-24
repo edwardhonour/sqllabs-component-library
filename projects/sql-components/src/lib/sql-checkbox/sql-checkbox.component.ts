@@ -46,7 +46,6 @@ export class SqlCheckboxComponent implements OnInit, AfterViewInit, OnDestroy  {
   change: EventEmitter<any> = new EventEmitter<any>();  
   
   ngAfterViewInit() {
-    console.log('AVI in sql-input')
     if (this.bs_row=='Y') {
       this.bs_row_value="row";
     } else {
@@ -64,8 +63,6 @@ export class SqlCheckboxComponent implements OnInit, AfterViewInit, OnDestroy  {
   constructor(private _dataService: SQLDataService) { 
     this.myObs = this._dataService.dataSubject.subscribe(d => {
       this.data=d;
-      console.log('Starting SQL Input: ' + this.col)
-      console.log(d)
       this.fieldData = this.data;
       this.value = this.fieldData[this.col];
       if (this.value=='Y') {
@@ -84,7 +81,6 @@ export class SqlCheckboxComponent implements OnInit, AfterViewInit, OnDestroy  {
   }
 
   handleChange() {
-     console.log('sql-input change')
      this.fieldData['submit']='N';
      if (this.value2==true) {
         this.value='Y';
@@ -92,7 +88,6 @@ export class SqlCheckboxComponent implements OnInit, AfterViewInit, OnDestroy  {
         this.value='N';
      }
      this.fieldData[this.col]=this.value;
-     console.log('sql-input')
      this._dataService.pushNotification(this.fieldData);
   }
 

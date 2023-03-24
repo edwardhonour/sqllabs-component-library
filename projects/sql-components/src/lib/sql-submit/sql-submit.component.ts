@@ -15,8 +15,8 @@ export class SqlSubmitComponent implements OnInit, OnDestroy {
   myObj!: Subscription;
 
   @Input() data: any={};
-  @Input() label: any = 'No Label Defined';
-  @Input() class: any = '';
+  @Input() label: any = 'Save Changes';
+  @Input() class: any = 'btn btn-primary';
   @Input() style: any = '';
   @Output()
   change: EventEmitter<any> = new EventEmitter<any>();
@@ -26,8 +26,6 @@ export class SqlSubmitComponent implements OnInit, OnDestroy {
     this.myObj = this._dataService.dataSubject.subscribe(d => {
       this.data=d;
       this.counter++;
-      console.log('sql-submit' + this.counter)
-      console.log(d)
     })
   }
 

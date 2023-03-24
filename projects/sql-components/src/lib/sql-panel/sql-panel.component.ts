@@ -52,7 +52,6 @@ export class SqlPanelComponent implements OnInit, DoCheck, OnChanges, AfterViewI
   ngAfterViewInit() {
     this.myObs = this._dataService.getSQL(this.sql, this.id).subscribe((data:any)=>{
         this.data=data;
-        console.log(this.data)
         this._dataService.pageSubject.next(this.data[0]);
      });
   }

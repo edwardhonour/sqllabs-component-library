@@ -1,4 +1,4 @@
-<div class="list-group">
+<div class="list-group" [style]="style">
     <button *ngIf="title!=''" class="list-group-item list-group-item-action list-group-item-dark">{{ title }}</button>
     <ng-container *ngFor="let m of list">
         <li (click)="processClick(m)" *ngIf="m?.active!=='Y'" 

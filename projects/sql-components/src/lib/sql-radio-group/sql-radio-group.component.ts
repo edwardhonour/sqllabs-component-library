@@ -57,8 +57,6 @@ export class SqlRadioGroupComponent implements OnInit, AfterViewInit, OnDestroy 
       this.fieldData = this.data;
       this.value = this.fieldData[this.col];
       this.counter++;
-      console.log('sql-select: ' + this.counter)
-      console.log(d)
     })
   }
 
@@ -82,10 +80,8 @@ export class SqlRadioGroupComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   handleChange() {
-    console.log('sql-radio change')
     this.fieldData['submit']='N';
     this.fieldData[this.col]=this.value;
-    console.log('sql-radio')
 
     this._dataService.pushNotification(this.fieldData);
  }

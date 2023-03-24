@@ -40,8 +40,7 @@ export class SqlTextareaComponent implements OnInit, AfterViewInit, OnDestroy  {
   change: EventEmitter<any> = new EventEmitter<any>();  
   
   ngAfterViewInit() {
-    console.log('AVI in sql-input')
-  
+
   }
 
   formData: any;
@@ -51,8 +50,6 @@ export class SqlTextareaComponent implements OnInit, AfterViewInit, OnDestroy  {
       this.fieldData = this.data;
       this.value = this.fieldData[this.col];
       this.counter++;
-      console.log('sql-input: ' + this.counter)
-      console.log(d)
     })
   }
 
@@ -62,7 +59,6 @@ export class SqlTextareaComponent implements OnInit, AfterViewInit, OnDestroy  {
 
 
   handleChange() {
-     console.log('sql-input change')
      this.fieldData['submit']='N';
      this.fieldData[this.col]=this.value;
      console.log('sql-input')

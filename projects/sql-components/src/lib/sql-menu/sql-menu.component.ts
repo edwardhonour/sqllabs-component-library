@@ -70,8 +70,6 @@ export class SqlMenuComponent implements OnInit, AfterViewInit, OnDestroy  {
       e.active='N';
     } );
     m.active='Y';
-    console.log('sql_menu');
-    console.log(m)
     this.menuClick.emit(m);
   }
   
@@ -88,7 +86,6 @@ export class SqlMenuComponent implements OnInit, AfterViewInit, OnDestroy  {
       this.row_placeholder="none";
   }
   this.col_placeholder=this.bs_col;
-console.log(this.row_list);
 
   this.row_list.forEach((e: ElementRef) => {
   

@@ -38,16 +38,7 @@ export class SqlDataMenuComponent  implements OnInit, AfterViewInit {
   counter: number = 0;
   
   constructor(private _dataService: SQLDataService) {     
-    if (this.use_parameters=='Y') {
-      this._dataService.paramSubject.subscribe(d => {
-        this.parameters=d;
-      })
-    } else {
-        this.parameters.page=this.page;
-        this.parameters.id=this.id;
-        this.parameters.id2=this.id2;
-        this.parameters.id3=this.id3;
-    }
+
   }
   
   ngOnInit(): void {
@@ -66,12 +57,28 @@ export class SqlDataMenuComponent  implements OnInit, AfterViewInit {
   }
   
   ngAfterViewInit(): void {
-  this._dataService.getSQL(this.sql, this.parameters).subscribe((data:any)=>{
-   this.list=data;
-   this.list.forEach(function (value: any) {
-     value.active='N';
-   });
-  });
+    if (this.use_parameters=='Y') {
+      this._dataService.paramSubject.subscribe(d => {
+        this.parameters=d;
+        this._dataService.getSQL(this.sql, this.parameters).subscribe((data:any)=>{
+          this.list=data;
+          this.list.forEach(function (value: any) {
+            value.active='N';
+          });
+         });
+      })
+    } else {
+        this.parameters.page=this.page;
+        this.parameters.id=this.id;
+        this.parameters.id2=this.id2;
+        this.parameters.id3=this.id3;
+        this._dataService.getMenu(this.sql, this.parameters).subscribe((data:any)=>{
+          this.list=data;
+          this.list.forEach(function (value: any) {
+            value.active='N';
+          });
+         });
+    }    
   }
   
 }

@@ -59,6 +59,8 @@ data: any = '';
 @Input() pagesize: number = 25;                         // rows per page for pagination.
 
 @Input() id: any = '0';                                 // id for where clause.
+@Input() id2: any = '0';                                 // id for where clause.
+@Input() id3: any = '0';                                 // id for where clause.
 
 @Input() open: any = "Y";                               // Does a closable list start open.
 @Input() class: any = 'table table-striped table-condensed';  // Class for the table container.
@@ -68,8 +70,10 @@ data: any = '';
 @Output() button_click: EventEmitter<any> = new EventEmitter<any>();
 @Output() row_click: EventEmitter<any> = new EventEmitter<any>();
 @Output() top_button_click: EventEmitter<any> = new EventEmitter<any>();
+parameters: any = { page: '', id: '', id2: '', id3: ''};
 
 counter: number = 0;
+page: any = '';
 
 constructor(private _dataService: SQLDataService) { 
 
@@ -93,6 +97,29 @@ this.button_click.emit(m);
 
 ngAfterViewInit(): void {
 
+  if (this.use_parameters=='Y') {
+    this._dataService.paramSubject.subscribe(d => {
+      this.parameters=d;
+      this._dataService.getSQL(this.sql, this.parameters).subscribe((data:any)=>{
+        this.list=data;
+        this.list.forEach(function (value: any) {
+          value.active='N';
+        });
+       });
+    })
+  } else {
+      this.parameters.page=this.page;
+      this.parameters.id=this.id;
+      this.parameters.id2=this.id2;
+      this.parameters.id3=this.id3;
+      this._dataService.getMenu(this.sql, this.parameters).subscribe((data:any)=>{
+        this.list=data;
+        this.list.forEach(function (value: any) {
+          value.active='N';
+        });
+       });
+  }
+
 this.format.title=this.title;
 this.format.class=this.class;
 this.format.style=this.style;
@@ -106,7 +133,7 @@ if (this.bs_row=='Y') {
 this.col_placeholder=this.bs_col;
 
 this.column_list.forEach((e: ElementRef) => {
-
+  
      let column_template: any = { column_name: '',  class: '',  type: '',  style: '',  title: '',  value: '' };
      
      //-- TH is data column
@@ -116,11 +143,11 @@ this.column_list.forEach((e: ElementRef) => {
        column_template.title=e.nativeElement.innerHTML;
      }      
      //-- BUTTON is button column
-     if (e.nativeElement.nodeName=='BUTTON') {
+     if (e.nativeElement.nodeName=='BUTTON') {      
        column_template.type="button";
        column_template.value='';
        column_template.title=e.nativeElement.innerHTML;
-     } 
+     }   
      //-- TD is text column
      if (e.nativeElement.nodeName=='TD') {
        column_template.type="text";
@@ -132,16 +159,14 @@ this.column_list.forEach((e: ElementRef) => {
      this.format.columns.push(column_template);
 });
 
-this.myDataObs = this._dataService.getSQL(this.sql, this.id).subscribe((data:any)=>{
+this.myDataObs = this._dataService.getSQL(this.sql, this.parameters).subscribe((data:any)=>{
  this.list=data;
 });
 }
 
 tableRefresh() {
-  console.log('table refresh');
   this.myDataObs.unsubscribe();
-  console.log(this.sql)
-  this.myDataObs = this._dataService.getSQL(this.sql, this.id).subscribe((data:any)=>{
+  this.myDataObs = this._dataService.getSQL(this.sql, this.parameters).subscribe((data:any)=>{
     this.list=data;
     console.log(this.list);
    });

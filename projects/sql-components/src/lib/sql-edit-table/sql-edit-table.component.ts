@@ -67,13 +67,6 @@ export class SqlEditTableComponent implements OnInit, AfterViewInit, OnDestroy  
   constructor(private _dataService: SQLDataService) {     
     this.myObs = this._dataService.dataSubject.subscribe(d => {
       this.data=d;
-      console.log('table');
-      console.log(d)
-      console.log(this.data)
-      console.log('table');
-      console.log(d.refresh)
-      console.log(d.error_code)
-      console.log(d.action)
       if (d.error_code===0) {
         console.log('wtf')
         this.tableRefresh();

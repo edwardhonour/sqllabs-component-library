@@ -90,6 +90,20 @@ export class SQLDataService {
 
   }
 
+  getMenu(sql: any, id: any) {
+    this.getLocalStorage();
+    const data = {
+      "q": "getmenu",
+      "parameters" : id,
+      "sql": sql,  
+      "uid": this.uid
+    }
+
+  this.t= this.http.post(this.base+"sqlcomponents.php", data);
+  return this.t;
+
+  }
+
   postSQL(formData: any) {
     this.getLocalStorage();
     const data = {
