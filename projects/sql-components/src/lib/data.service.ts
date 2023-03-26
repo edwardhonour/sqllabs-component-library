@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpClientModule, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, of } from 'rxjs';
-import * as CryptoJs from 'crypto-js';
+import * as CryptoJS from 'crypto-js';
 
 
 @Injectable({
@@ -39,6 +39,7 @@ export class SQLDataService {
           this.base=webserver;
         }
         this.url=this.base+'sqlcomponents.php';
+
   }
 
   getLocalStorage() {
@@ -123,10 +124,35 @@ export class SQLDataService {
   }
 
   postSQL(formData: any) {
+
+    var CryptoJSAesJson = {
+      stringify: function (cipherParams: any) {
+        var j: any = { ct: cipherParams.ciphertext.toString(CryptoJS.enc.Base64) };
+        if (cipherParams.iv) j.iv = cipherParams.iv.toString();
+        if (cipherParams.salt) j.s = cipherParams.salt.toString();
+        return JSON.stringify(j);
+      },
+      parse: function (jsonStr: any) {
+        var j = JSON.parse(jsonStr);
+        var cipherParams = CryptoJS.lib.CipherParams.create({
+          ciphertext: CryptoJS.enc.Base64.parse(j.ct),
+        });
+        if (j.iv) cipherParams.iv = CryptoJS.enc.Hex.parse(j.iv);
+        if (j.s) cipherParams.salt = CryptoJS.enc.Hex.parse(j.s);
+        return cipherParams;
+      },
+    };
+
     this.getLocalStorage();
+
+    console.log('performing encryption in postsql')
+//    let k = CryptoJS.AES.encrypt(JSON.stringify(formData), this.TheSecret, {format: CryptoJSAesJson}).toString();
+    let k = CryptoJS.AES.encrypt(JSON.stringify(formData), this.TheSecret, {format: CryptoJSAesJson});
+    console.log(k);
+ß
     const data = {
-      "q": "postform",
-      "data": formData,
+      "q" : "postform",
+      "data": k,
       "uid": this.uid
     }
 
@@ -172,9 +198,13 @@ export class SQLDataService {
 
     this.getLocalStorage();
 
+    console.log('performing encryption in postform')
+    let k = CryptoJS.AES.encrypt(JSON.stringify(formData), this.TheSecret, {format: CryptoJSAesJson}).toString();
+    console.log(k);
+
     const data = {
       "q" : "postform",
-      "data": CryptoJS.AES.encrypt(JSON.stringify(formData), this.TheSecret, {format: CryptoJSAesJson}).toString(),
+      "data": k,
       "uid": this.uid
     }
 
