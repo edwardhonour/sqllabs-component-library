@@ -7,11 +7,11 @@ import { BehaviorSubject, of } from 'rxjs';
 })
 export class SQLDataService {
 
-  public dataSubject = new BehaviorSubject<any>('{}');
-  public pageSubject = new BehaviorSubject<any>('{}');
-  public paramSubject = new BehaviorSubject<any>('{}');
-  public routerSubject = new BehaviorSubject<any>('{}');
-  public containerSubject = new BehaviorSubject<any>('{ id: "", id2: "", id3: "" }');
+  public dataSubject = new BehaviorSubject<any>({});
+  public pageSubject = new BehaviorSubject<any>({});
+  public paramSubject = new BehaviorSubject<any>({});
+  public routerSubject = new BehaviorSubject<any>({});
+  public containerSubject = new BehaviorSubject<any>({ id: "", id2: "", id3: "" });
 
   t: any;
   uid: any;

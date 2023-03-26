@@ -71,8 +71,6 @@ export class SqlCheckboxComponent implements OnInit, AfterViewInit, OnDestroy  {
         this.value2=false;
       }
       this.counter++;
-      console.log('sql-input: ' + this.value)
-
     })
   }
 
