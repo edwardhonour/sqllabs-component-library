@@ -31,6 +31,7 @@ export class PreInsertTriggerComponent implements AfterViewInit, OnChanges, OnDe
   }
 
   registerService() {
+    let count: number=0;
     console.log('pre-insert-trigger: registerService: init')
     this.myObs = this._dataService.dataSubject.subscribe(d => {
       this.data=d;
@@ -39,14 +40,18 @@ export class PreInsertTriggerComponent implements AfterViewInit, OnChanges, OnDe
         let t: any = [];
         this.data.triggers=t;
       }
-      let count=0;
+      count=0;
+      console.log('before')
       console.log(this.data);
+      console.log('after')
       this.data.triggers.forEach((element: any) => {
         console.log(element)
         if (element.type=='pre-insert-trigger'&&element.name==this.name) {
              count++;
         }
       });
+      console.log('count')
+      console.log(count)
       if (count==0) {
         let tr: any = { type: 'pre-insert-trigger', name: this.name, sql: this.sql, order: this.order }
         console.log('before push');
