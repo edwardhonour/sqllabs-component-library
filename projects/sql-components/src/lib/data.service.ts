@@ -1,6 +1,8 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpClientModule, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, of } from 'rxjs';
+import * as CryptoJs from 'crypto-js';
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +14,13 @@ export class SQLDataService {
   public paramSubject = new BehaviorSubject<any>({});
   public routerSubject = new BehaviorSubject<any>({});
   public containerSubject = new BehaviorSubject<any>({ id: "", id2: "", id3: "" });
+
+  enData: any;
+  dataValue: any = { id: "hello", id2: "world" }
+  TheSecret="hide-triggers";
+  saltHex: any;
+  ctHex: any;
+  ivHex: any;
 
   t: any;
   uid: any;
@@ -142,10 +151,30 @@ export class SQLDataService {
   }
 
   postForm(formData: any[]) {
+
+    var CryptoJSAesJson = {
+      stringify: function (cipherParams: any) {
+        var j: any = { ct: cipherParams.ciphertext.toString(CryptoJS.enc.Base64) };
+        if (cipherParams.iv) j.iv = cipherParams.iv.toString();
+        if (cipherParams.salt) j.s = cipherParams.salt.toString();
+        return JSON.stringify(j);
+      },
+      parse: function (jsonStr: any) {
+        var j = JSON.parse(jsonStr);
+        var cipherParams = CryptoJS.lib.CipherParams.create({
+          ciphertext: CryptoJS.enc.Base64.parse(j.ct),
+        });
+        if (j.iv) cipherParams.iv = CryptoJS.enc.Hex.parse(j.iv);
+        if (j.s) cipherParams.salt = CryptoJS.enc.Hex.parse(j.s);
+        return cipherParams;
+      },
+    };
+
     this.getLocalStorage();
+
     const data = {
       "q" : "postform",
-      "data": formData,
+      "data": CryptoJS.AES.encrypt(JSON.stringify(formData), this.TheSecret, {format: CryptoJSAesJson}).toString(),
       "uid": this.uid
     }
 

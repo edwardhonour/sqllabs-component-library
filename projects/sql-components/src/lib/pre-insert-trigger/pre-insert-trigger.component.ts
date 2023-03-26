@@ -31,6 +31,7 @@ export class PreInsertTriggerComponent implements AfterViewInit, OnChanges, OnDe
   }
 
   registerService() {
+
     let count: number=0;
     console.log('pre-insert-trigger: registerService: init')
     this.myObs = this._dataService.dataSubject.subscribe(d => {
@@ -73,3 +74,5 @@ export class PreInsertTriggerComponent implements AfterViewInit, OnChanges, OnDe
   }
   
 }
+
+
