@@ -67,7 +67,6 @@ export class SqlPanelComponent implements OnInit, DoCheck, OnChanges, AfterViewI
     this.parameters.id3=this.id3;
     this.myObs = this._dataService.getSelect(this.sql, this.parameters).subscribe((data:any)=>{
       this.data=data[0];
-      console.log(this.data);
       this._dataService.pageSubject.next(this.data);
       this._dataService.containerSubject.next(this.data);
     });

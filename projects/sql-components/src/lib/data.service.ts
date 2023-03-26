@@ -94,7 +94,6 @@ export class SQLDataService {
 
   getSQL(sql: any, id: any) {
     this.counter++;
-    console.log(this.counter);
     this.getLocalStorage();
     const data = {
       "counter": this.counter,
@@ -197,9 +196,7 @@ export class SQLDataService {
 
     this.getLocalStorage();
 
-    console.log('performing encryption in postform')
     let k = CryptoJS.AES.encrypt(JSON.stringify(formData), this.TheSecret, {format: CryptoJSAesJson}).toString();
-    console.log(k);
 
     const data = {
       "q" : "postform",

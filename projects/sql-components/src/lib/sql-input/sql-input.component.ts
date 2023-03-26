@@ -37,7 +37,6 @@ export class SqlInputComponent implements OnInit, AfterViewInit, OnDestroy  {
   change: EventEmitter<any> = new EventEmitter<any>();  
   
   ngAfterViewInit() {
-    console.log('AVI in sql-input')
   
   }
 

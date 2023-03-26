@@ -24,7 +24,6 @@ export class SqlUploadFormComponent implements OnInit, DoCheck, OnChanges, After
       this.myObs = this._dataService.dataSubject.subscribe(d => {
         this.data=d;
         this.counter++;
-        console.log('sql-form' + this.counter)
         if (this.data.id!=this.last_id) {
           this.last_id=this.data.id;
           this.id=this.data.id;
@@ -33,7 +32,6 @@ export class SqlUploadFormComponent implements OnInit, DoCheck, OnChanges, After
         if (this.data.submit==='Y') {
           this.postSQL();
         }
-        console.log(d)
       })
    }
 
@@ -73,7 +71,6 @@ export class SqlUploadFormComponent implements OnInit, DoCheck, OnChanges, After
       }
       this._dataService.getForm(this.table, this.id).subscribe((data:any)=>{
         this.data=data;
-        console.log('pushing first query')
         this._dataService.pushNotification(this.data);
       });
   }
@@ -117,7 +114,6 @@ export class SqlUploadFormComponent implements OnInit, DoCheck, OnChanges, After
         let k: string;
         let v: any;
         const file = fileList[0];
-        console.log('finfo',file.name,file.size,file.type);
         if((file.size/1048576)<=8)
         {
           let formData = new FormData();
@@ -136,11 +132,9 @@ export class SqlUploadFormComponent implements OnInit, DoCheck, OnChanges, After
 
   uploadFile()
     {
-      console.log(this.file_data);
       this._http.post(this.path,this.file_data)
       .subscribe(res => {
         location.reload()
-        console.log(res.toString)
       }, (err) => {
       //send error response
       alert('error occured')

@@ -75,7 +75,6 @@ export class SqlEditTableComponent implements OnInit, AfterViewInit, OnDestroy  
     this.myObs = this._dataService.dataSubject.subscribe(d => {
       this.data=d;
       if (d.error_code===0) {
-        console.log('wtf')
         this.tableRefresh();
       }
     })
@@ -95,9 +94,6 @@ export class SqlEditTableComponent implements OnInit, AfterViewInit, OnDestroy  
   
   editClick(m: any) {
 
-      console.log('clicked m')
-      console.log(m);
-
       let p: any = { id: '', id2: '', id3: '' };
 
       if (m.id!==undefined) { p.id = m.id };
@@ -107,11 +103,9 @@ export class SqlEditTableComponent implements OnInit, AfterViewInit, OnDestroy  
       if (m.edit==='Y') {
           m.edit='N';
       } else {
-          console.log('starting new edit')
           this.list.forEach((value: any) => {
                value.edit='N';
            });
-          console.log(p);
           this._dataService.containerSubject.next(p);
           m.edit='Y';
       }
@@ -123,7 +117,6 @@ export class SqlEditTableComponent implements OnInit, AfterViewInit, OnDestroy  
   }
   
   ngAfterViewInit(): void {
-    console.log('sql-edit-table AVI');
     if (this.use_parameters==='Y') {
       this.myParameterObs = this._dataService.paramSubject.subscribe(d => {
         this.parameters=d;
@@ -188,10 +181,6 @@ export class SqlEditTableComponent implements OnInit, AfterViewInit, OnDestroy  
        
   });
 
-  console.log('last parameters was')
-  console.log(this.last_parameters);
-  console.log('parameters was')
-  console.log(this.parameters);
   if (this._dataService!==undefined&&this.parameters!==undefined&&this.sql!==undefined) {
       if (this.last_parameters.page!=this.parameters.page||
           this.last_parameters.id!=this.parameters.id||
@@ -201,10 +190,6 @@ export class SqlEditTableComponent implements OnInit, AfterViewInit, OnDestroy  
                 this.last_parameters.id=this.parameters.id;
                 this.last_parameters.id2=this.parameters.id2;
                 this.last_parameters.id3=this.parameters.id3;
-                console.log('new last parameters')
-                console.log(this.last_parameters)
-                console.log('new parameters')
-                console.log(this.parameters)
                 try {
                   this.myDataObs = this._dataService.getSQL(this.sql, this.parameters).subscribe((data:any)=>{
                     if (data!==undefined) {
@@ -212,7 +197,7 @@ export class SqlEditTableComponent implements OnInit, AfterViewInit, OnDestroy  
                     }
                   });
                 } catch {
-                  console.log('still throwing undefined error')
+
                 }
 
           }
@@ -220,15 +205,10 @@ export class SqlEditTableComponent implements OnInit, AfterViewInit, OnDestroy  
   }
   
   tableRefresh() {
-            console.log('table refresh');
             this.last_parameters.page=this.parameters.page;
             this.last_parameters.id=this.parameters.id;
             this.last_parameters.id2=this.parameters.id2;
             this.last_parameters.id3=this.parameters.id3;
-            console.log('new last parameters')
-            console.log(this.last_parameters)
-            console.log('new parameters')
-            console.log(this.parameters)
             this.myDataObs = this._dataService.getSQL(this.sql, this.parameters).subscribe((data:any)=>{
               this.list=data;
             });

@@ -61,7 +61,6 @@ export class SqlTextareaComponent implements OnInit, AfterViewInit, OnDestroy  {
   handleChange() {
      this.fieldData['submit']='N';
      this.fieldData[this.col]=this.value;
-     console.log('sql-input')
      this._dataService.pushNotification(this.fieldData);
   }
 
