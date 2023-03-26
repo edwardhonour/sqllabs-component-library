@@ -14,25 +14,9 @@ import { Subscription } from 'rxjs';
 export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewInit, OnDestroy  {
 
   last_id: any = '';
-  myObs!: Subscription;
-
-  constructor(private _dataService: SQLDataService) {
-      
-    this.myObs = this._dataService.dataSubject.subscribe(d => {
-        this.data=d;
-        this.counter++;
-        console.log('sql-form' + this.counter)
-        if (this.data.id!=this.last_id) {
-          this.last_id=this.data.id;
-          this.id=this.data.id;
-          //this.ngAfterViewInit();
-        }
-        if (this.data.submit==='Y') {
-          this.postSQL();
-        }
-        console.log(d)
-      })
-   }
+  myDataObs!: Subscription;        // dataSubject contains form fields
+  myContainerObs!: Subscription;   // containerSubject contains parameters modified by its container.
+  containerParameters: any = { id: '', id2: '', id3: '' };
 
   //-- Inputs
   @Input() data: any;                                     
@@ -43,11 +27,11 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
   @Input() default_col2: any = '';  
   @Input() default_col3: any = '';   
   @Input() default_value: any = '';  
-  @Input() default_value2: any = '';  
-  @Input() default_value3: any = '';            
-  @Input() table: any = "dual";                           
-  @Input() embedded: any = "N";                          
-  @Input() card: any = "Y";                               
+  @Input() default_value2: any = '';
+  @Input() default_value3: any = '';
+  @Input() table: any = "dual";
+  @Input() embedded: any = "Y";
+  @Input() card: any = "Y";
   @Input() closable: any = "N";                           
   @Input() open: any = "Y";                               
   @Input() class: any = "";                              
@@ -66,26 +50,52 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
   showErrorAlert: any = 'N';
   errorMessage: any = 'Post Failed'
   showSuccessAlert: any = 'N';
+
+  constructor(private _dataService: SQLDataService) {
+    // part of an edit table or container.
+    if (this.embedded=='Y') {
+      console.log('sql-form is subscribing to containerSubject');
+      this.myContainerObs = this._dataService.containerSubject.subscribe(d => {
+        this.containerParameters=d;
+        console.log('container parameters are') 
+        console.log(this.containerParameters);
+        
+        if (this.containerParameters.id!=this.last_id) {
+          this.last_id=this.containerParameters.id;
+          this.id=this.containerParameters.id;
+          if (this.containerParameters.id2!==undefined) { this.id2=this.containerParameters.id2; }
+          if (this.containerParameters.id3!==undefined) { this.id3=this.containerParameters.id3; }
+          this.ngAfterViewInit();
+        }
+      })
+    }     
+    this.myDataObs = this._dataService.dataSubject.subscribe(d => {
+        this.data=d;
+        if (this.data.id!=this.last_id) {
+          this.last_id=this.data.id;
+          this.id=this.data.id;
+        }
+        if (this.data.submit==='Y') {
+          this.postSQL();
+        }
+        console.log(d)
+      })
+   }
+
   ngOnInit(): void {
 
   }
 
   ngAfterViewInit(): void {
       console.log('sql-form after view init')
-      if (this.embedded=='Y') {
-        this.id==this.data.id;
-      } else {
-
-      }
       this.parameters.id=this.id;
-
       if (this.table!='dual') {
         this._dataService.getForm(this.table, this.parameters).subscribe((data:any)=>{
             this.data=data;
             if (this.default_col!='') { this.data[this.default_col]=this.default_value }
             if (this.default_col2!='') { this.data[this.default_col2]=this.default_value2 }        
             if (this.default_col3!='') { this.data[this.default_col3]=this.default_value3 }                
-        this._dataService.pushNotification(this.data);
+            this._dataService.pushNotification(this.data);
       });
     }
   }
@@ -124,6 +134,7 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
 
 
   ngOnDestroy(): void {
-    this.myObs.unsubscribe();
+    this.myContainerObs.unsubscribe();
+    this.myDataObs.unsubscribe();
   }
 }

@@ -16,9 +16,10 @@ import { Subscription } from 'rxjs';
 export class SqlPanelComponent implements OnInit, DoCheck, OnChanges, AfterViewInit, OnDestroy  {
   
   //-- Inputs
-  @Input() use_parameters: any = 'N';                             // does data come from Router.
+  @Input() use_router: any = 'Y';                         // does data come from Router.
+  @Input() page: any = '';
   @Input() data: any;                                     // Depreciated
-  @Input() sql: any = "select 'x' from dual";             // query to populate panel.          
+  @Input() sql: any = "";                                 // query to populate panel.          
   @Input() id: any = '0';                                 // Primary key for query.
   @Input() id2: any = '0'; 
   @Input() id3: any = '0'; 
@@ -40,20 +41,36 @@ export class SqlPanelComponent implements OnInit, DoCheck, OnChanges, AfterViewI
   counter: number = 0;
 
   public parameterValue: string = '';
+  parameters: any = { page: '', id: '', id2: '', id3: ''};
 
   constructor(private _dataService: SQLDataService, 
     private _router: Router,
-    private _activatedRoute: ActivatedRoute) { }
+    private _activatedRoute: ActivatedRoute) {
+      if (this.use_router=='Y') {      
+        this.myObs = this._dataService.routerSubject.subscribe(d => {
+          if (d.page!==undefined) { this.page=d.page; }
+          if (d.id!==undefined) { this.id=d.id; }
+          if (d.id2!==undefined) { this.id2=d.id2; }
+          if (d.id3!==undefined) { this.id3=d.id3; }
+          this._dataService.paramSubject.next(d);
+        })
+      }
+     }
 
   ngOnInit() {
 
   }
       
   ngAfterViewInit() {
-    this.myObs = this._dataService.getSQL(this.sql, this.id).subscribe((data:any)=>{
-        this.data=data;
-        this._dataService.pageSubject.next(this.data[0]);
-     });
+    this.parameters.id=this.id;
+    this.parameters.id2=this.id2;
+    this.parameters.id3=this.id3;
+    this.myObs = this._dataService.getSelect(this.sql, this.parameters).subscribe((data:any)=>{
+      this.data=data[0];
+      console.log(this.data);
+      this._dataService.pageSubject.next(this.data);
+      this._dataService.containerSubject.next(this.data);
+    });
   }
   
   ngDoCheck(): void {

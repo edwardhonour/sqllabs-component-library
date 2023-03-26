@@ -1,6 +1,4 @@
-<!-- it is not a card-->
-<div *ngIf="card=='N'">
-    <!-- bs_row == 'Y' -->
+<ng-container *ngIf="card=='N'">
     <div *ngIf="bs_row=='Y'" class="row">
         <div [class]="bs_col">
             <ng-container *ngTemplateOutlet="fullTmpl"></ng-container>
@@ -16,7 +14,7 @@
     <div *ngIf="bs_row!='Y'&&bs_col==''">
             <ng-container *ngTemplateOutlet="fullTmpl"></ng-container>
     </div>
-</div>
+</ng-container>
 
 <!-- it is a card -->
 <div *ngIf="card=='Y'">

@@ -67,7 +67,7 @@
         <div [class]="col_placeholder">
             <div class="card">
                 <div class="card-header"  style="margin-top: 0px;">
-                    <div class="row p-2 mt-2 mb-2">
+                    <div class="row p-2">
                         <div class="col-md-12">
                             <h2>{{ title }}</h2>
                         </div>
@@ -129,5 +129,5 @@
     </div>
 </div>
 <ng-template #contentTmpl>
-    <ng-content></ng-content>
+    <ng-content select="[form]"></ng-content>
 </ng-template>

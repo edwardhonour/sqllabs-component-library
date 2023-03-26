@@ -33,6 +33,7 @@ export class RouteParameterResolver implements Resolve<boolean> {
         return of(null);
       }));
       console.log(this.r);
+      this.dataService.paramSubject.next(this.r);
     return (this.r)
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpClientModule, HttpHeaders, HttpParams } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,7 @@ export class SQLDataService {
   public pageSubject = new BehaviorSubject<any>('{}');
   public paramSubject = new BehaviorSubject<any>('{}');
   public routerSubject = new BehaviorSubject<any>('{}');
+  public containerSubject = new BehaviorSubject<any>('{ id: "", id2: "", id3: "" }');
 
   t: any;
   uid: any;
@@ -52,12 +53,12 @@ export class SQLDataService {
     }
   }
 
-  getSelect(sql: any, f: any, form: any) {
+  getSelect(sql: any, params: any) {
     this.getLocalStorage();
     const data = {
       "q" : 'getselect',
       "sql": sql,   
-      "form": form,   
+      "parameters": params,   
       "uid": this.uid
     }
 
@@ -67,14 +68,18 @@ export class SQLDataService {
   }
 
   pingParameters(path: any) {
-    this.getLocalStorage();
-    const data = {
-      q: 'ping',  
-      path: path,
-      "uid": this.uid
-    }
-    this.t= this.http.post(this.base+"sqlcomponents.php", data);
-    return this.t;
+
+      let output: any = { page: '', id: '', id2: '', id3: '' };
+  
+      let j: any = path.split('/');
+  
+      if (j[1]!==undefined) { output.page=j[1]; }
+      if (j[2]!==undefined) { output.id=j[2];   }
+      if (j[3]!==undefined) { output.id2=j[3];  }
+      if (j[4]!==undefined) { output.id3=j[4];  }
+  
+      return of(output);
+  
   }
 
   getSQL(sql: any, id: any) {

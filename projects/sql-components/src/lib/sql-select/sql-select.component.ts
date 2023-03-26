@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, OnChanges, DoCheck, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, OnChanges, DoCheck, 
+  AfterViewInit, ContentChildren, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatFormFieldControl } from '@angular/material/form-field';
@@ -23,6 +24,7 @@ export class SqlSelectComponent implements OnInit, AfterViewInit, OnDestroy  {
   fieldData: any = '';
   myObs!: Subscription;
   myDataObs!: Subscription;
+  @ContentChildren('') private list!: ElementRef;
 
   @Input() appearance: string = 'outline';
   @Input() native: any = 'Y';
@@ -30,6 +32,9 @@ export class SqlSelectComponent implements OnInit, AfterViewInit, OnDestroy  {
   @Input() handler: string = '';
   @Input() col: string = '';
   @Input() data: any;
+  @Input() id: any = '';
+  @Input() id2: any = '';
+  @Input() id3: any = '';
   @Input() class: any = '';
   @Input() style: any = '';
   @Input() hint: string = '';
@@ -44,6 +49,7 @@ export class SqlSelectComponent implements OnInit, AfterViewInit, OnDestroy  {
   counter: number = 0;
   @Output()
   change: EventEmitter<any> = new EventEmitter<any>();  
+  parameters: any = { page: '', id: '', id2: '', id3: ''};
   
   formData: any;
   constructor(private _dataService: SQLDataService) { 
@@ -52,15 +58,11 @@ export class SqlSelectComponent implements OnInit, AfterViewInit, OnDestroy  {
       this.fieldData = this.data;
       this.value = this.fieldData[this.col];
       this.counter++;
-      console.log('sql-select: ' + this.counter)
-      console.log(d)
     })
   }
 
   ngAfterViewInit() {
-    this.myDataObs = this._dataService.getSelect(this.sql, this.handler, this.fieldData).subscribe((data:any)=>{
-      this.selectData=data;
-    });
+
   }
 
   ngOnInit(): void {
@@ -69,10 +71,8 @@ export class SqlSelectComponent implements OnInit, AfterViewInit, OnDestroy  {
 
 
   handleChange() {
-     console.log('sql-select change')
      this.fieldData['submit']='N';
      this.fieldData[this.col]=this.value;
-     console.log('sql-select')
      this._dataService.pushNotification(this.fieldData);
   }
 

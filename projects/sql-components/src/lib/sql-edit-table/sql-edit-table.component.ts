@@ -6,7 +6,7 @@ import { Data } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxTablePaginationModule, PaginationComponent } from 'ngx-table-pagination';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable, from } from 'rxjs';
 
 @Component({
   selector: 'sql-edit-table',
@@ -24,6 +24,7 @@ export class SqlEditTableComponent implements OnInit, AfterViewInit, OnDestroy  
   @ContentChildren('column') private column_list!: ElementRef[];
   myObs!: Subscription;
   myDataObs!: Subscription;
+  myParameterObs!: Subscription;
   
   // format: is built from ContentChildren and Input Parameters
   format: any = { title: '', search: '', class: '', style: '', columns: [], buttons: [] };
@@ -54,6 +55,9 @@ export class SqlEditTableComponent implements OnInit, AfterViewInit, OnDestroy  
   @Input() pagination: any = 'Y';                         // Include pagination.
   @Input() pagesize: number = 25;                         // rows per page for pagination.
   @Input() id: any = '0';                                 // id for where clause.
+  @Input() id2: any = '0';                                 // id for where clause.
+  @Input() id3: any = '0';                                 // id for where clause.
+
   @Input() open: any = "Y";                               // Does a closable list start open.
   @Input() class: any = 'table table-striped table-condensed';  // Class for the table container.
   @Input() style: any = "";                               // Style for the table container.
@@ -61,6 +65,9 @@ export class SqlEditTableComponent implements OnInit, AfterViewInit, OnDestroy  
   @Output() button_click: EventEmitter<any> = new EventEmitter<any>();
   @Output() row_click: EventEmitter<any> = new EventEmitter<any>();
   @Output() top_button_click: EventEmitter<any> = new EventEmitter<any>();
+  parameters: any = { page: '', id: '', id2: '', id3: ''};
+  last_parameters: any = { page: 'xxx', id: 'xxx', id2: 'xxx', id3: 'xxx' }
+  page: any = '';
   
   counter: number = 0;
   
@@ -87,12 +94,28 @@ export class SqlEditTableComponent implements OnInit, AfterViewInit, OnDestroy  
   }
   
   editClick(m: any) {
+
+      console.log('clicked m')
+      console.log(m);
+
+      let p: any = { id: '', id2: '', id3: '' };
+
+      if (m.id!==undefined) { p.id = m.id };
+      if (m.id2!==undefined) { p.id2 = m.id2 };
+      if (m.id3!==undefined) { p.id3 = m.id3 };
+
       if (m.edit==='Y') {
           m.edit='N';
       } else {
-          this._dataService.dataSubject.next(m);
+          console.log('starting new edit')
+          this.list.forEach((value: any) => {
+               value.edit='N';
+           });
+          console.log(p);
+          this._dataService.containerSubject.next(p);
           m.edit='Y';
       }
+
   }
   
   buttonClick(m: any) {
@@ -100,7 +123,31 @@ export class SqlEditTableComponent implements OnInit, AfterViewInit, OnDestroy  
   }
   
   ngAfterViewInit(): void {
-  
+    console.log('sql-edit-table AVI');
+    if (this.use_parameters==='Y') {
+      this.myParameterObs = this._dataService.paramSubject.subscribe(d => {
+        this.parameters=d;
+        this.myDataObs = this._dataService.getSQL(this.sql, this.parameters).subscribe((data:any)=>{
+          this.list=data;
+          this.list.forEach(function (value: any) {
+            value.active='N';
+          });
+         });
+      })
+    } 
+    if (this.use_parameters==='N') {
+        this.parameters.page=this.page;
+        this.parameters.id=this.id;
+        this.parameters.id2=this.id2;
+        this.parameters.id3=this.id3;
+        this.myDataObs = this._dataService.getSQL(this.sql, this.parameters).subscribe((data:any)=>{
+          this.list=data;
+          this.list.forEach(function (value: any) {
+            value.active='N';
+          });
+         });
+    }
+
   this.format.title=this.title;
   this.format.class=this.class;
   this.format.style=this.style;
@@ -138,25 +185,59 @@ export class SqlEditTableComponent implements OnInit, AfterViewInit, OnDestroy  
        if (e.nativeElement.className!==undefined) { column_template.class=e.nativeElement.className; }
        column_template.style=e.nativeElement.style.cssText;
        this.format.columns.push(column_template);
+       
   });
-  
-  this.myDataObs = this._dataService.getSQL(this.sql, this.id).subscribe((data:any)=>{
-   this.list=data;
-  });
+
+  console.log('last parameters was')
+  console.log(this.last_parameters);
+  console.log('parameters was')
+  console.log(this.parameters);
+  if (this._dataService!==undefined&&this.parameters!==undefined&&this.sql!==undefined) {
+      if (this.last_parameters.page!=this.parameters.page||
+          this.last_parameters.id!=this.parameters.id||
+          this.last_parameters.id2!=this.parameters.id2||
+          this.last_parameters.id3!=this.parameters.id3) {
+                this.last_parameters.page=this.parameters.page;
+                this.last_parameters.id=this.parameters.id;
+                this.last_parameters.id2=this.parameters.id2;
+                this.last_parameters.id3=this.parameters.id3;
+                console.log('new last parameters')
+                console.log(this.last_parameters)
+                console.log('new parameters')
+                console.log(this.parameters)
+                try {
+                  this.myDataObs = this._dataService.getSQL(this.sql, this.parameters).subscribe((data:any)=>{
+                    if (data!==undefined) {
+                      this.list=data;
+                    }
+                  });
+                } catch {
+                  console.log('still throwing undefined error')
+                }
+
+          }
+      }
   }
   
   tableRefresh() {
-    console.log('table refresh');
-    this.myDataObs.unsubscribe();
-    console.log(this.sql)
-    this.myDataObs = this._dataService.getSQL(this.sql, this.id).subscribe((data:any)=>{
-      this.list=data;
-      console.log(this.list);
-     });
+            console.log('table refresh');
+            this.last_parameters.page=this.parameters.page;
+            this.last_parameters.id=this.parameters.id;
+            this.last_parameters.id2=this.parameters.id2;
+            this.last_parameters.id3=this.parameters.id3;
+            console.log('new last parameters')
+            console.log(this.last_parameters)
+            console.log('new parameters')
+            console.log(this.parameters)
+            this.myDataObs = this._dataService.getSQL(this.sql, this.parameters).subscribe((data:any)=>{
+              this.list=data;
+            });
   }
   
   ngOnDestroy(): void {
-    this.myObs.unsubscribe();
-    this.myDataObs.unsubscribe();
+      this.myObs.unsubscribe();
+      this.myDataObs.unsubscribe();
+      this.myParameterObs.unsubscribe();
   }
+
   }
