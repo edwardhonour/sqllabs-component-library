@@ -145,13 +145,13 @@ export class SQLDataService {
 
     this.getLocalStorage();
 
-    console.log('performing encryption in postsql')
-    let k = CryptoJS.AES.encrypt(JSON.stringify(formData), this.TheSecret, {format: CryptoJSAesJson}).toString();
-    let l = JSON.stringify(k);
-    console.log(l);
+    let triggers=formData.triggers;
+    let k = CryptoJS.AES.encrypt(JSON.stringify(triggers), this.TheSecret, {format: CryptoJSAesJson}).toString();
+    formData.triggers=k;
+
     const data = {
       "q" : "postform",
-      "data": k,
+      "data": formData,
       "uid": this.uid
     }
 
