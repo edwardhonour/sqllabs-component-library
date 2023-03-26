@@ -31,22 +31,29 @@ export class PreInsertTriggerComponent implements AfterViewInit, OnChanges, OnDe
   }
 
   registerService() {
-
+    console.log('pre-insert-trigger: registerService: init')
     this.myObs = this._dataService.dataSubject.subscribe(d => {
       this.data=d;
+      console.log('pre-insert-trigger: registerService: subscribe')
       if (this.data.triggers===undefined) {
         let t: any = [];
         this.data.triggers=t;
       }
       let count=0;
+      console.log(this.data);
       this.data.triggers.forEach((element: any) => {
+        console.log(element)
         if (element.type=='pre-insert-trigger'&&element.name==this.name) {
              count++;
         }
       });
       if (count>0) {
         let tr: any = { type: 'pre-insert-trigger', name: this.name, sql: this.sql, order: this.order }
+        console.log('before push');
+        console.log(this.data.triggers)
         this.data.triggers.push(tr);
+        console.log('after push');
+        console.log(this.data.triggers)
         this._dataService.dataSubject.next(this.data);
       }
     })
@@ -55,6 +62,7 @@ export class PreInsertTriggerComponent implements AfterViewInit, OnChanges, OnDe
 
   ngAfterViewInit(): void {
     setTimeout(() => {
+      console.log('pre-insert-trigger: AVI')
       this.registerService();  
     }, 1000);
   }
