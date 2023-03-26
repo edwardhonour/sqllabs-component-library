@@ -47,7 +47,7 @@ export class PreInsertTriggerComponent implements AfterViewInit, OnChanges, OnDe
              count++;
         }
       });
-      if (count>0) {
+      if (count==0) {
         let tr: any = { type: 'pre-insert-trigger', name: this.name, sql: this.sql, order: this.order }
         console.log('before push');
         console.log(this.data.triggers)
