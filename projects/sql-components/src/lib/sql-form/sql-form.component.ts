@@ -53,10 +53,13 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
 
   constructor(private _dataService: SQLDataService) {
     // part of an edit table or container.
+    /*
     if (this.embedded=='Y') {
+      console.log('form constructor')
       this.myContainerObs = this._dataService.containerSubject.subscribe(d => {
+        console.log('container parameters')
+        console.log(d)
         this.containerParameters=d;
-        
         if (this.containerParameters.id!=this.last_id) {
           this.last_id=this.containerParameters.id;
           this.id=this.containerParameters.id;
@@ -67,6 +70,7 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
       })
     }     
     this.myDataObs = this._dataService.dataSubject.subscribe(d => {
+        console.log('data subject')
         this.data=d;
         if (this.data.id!=this.last_id) {
           this.last_id=this.data.id;
@@ -76,6 +80,7 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
           this.postSQL();
         }
       })
+        */
    }
 
   ngOnInit(): void {
@@ -83,6 +88,7 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
   }
 
   ngAfterViewInit(): void {
+      console.log('AVI')
       this.parameters.id=this.id;
       if (this.table!='dual') {
         this._dataService.getForm(this.table, this.parameters).subscribe((data:any)=>{
