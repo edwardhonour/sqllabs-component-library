@@ -53,7 +53,7 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
 
   constructor(private _dataService: SQLDataService) {
     // part of an edit table or container.
-    /*
+
     if (this.embedded=='Y') {
       console.log('form constructor')
       this.myContainerObs = this._dataService.containerSubject.subscribe(d => {
@@ -80,7 +80,7 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
           this.postSQL();
         }
       })
-        */
+
    }
 
   ngOnInit(): void {
@@ -123,6 +123,7 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
       },1000);
 
     });
+
   }
   
   ngDoCheck(): void {
