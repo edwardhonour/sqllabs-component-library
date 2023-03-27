@@ -34,6 +34,7 @@ export class RouteParameterResolver implements Resolve<boolean> {
       }));
       console.log(this.r);
       this.dataService.paramSubject.next(this.r);
+      this.dataService.containerSubject.next(this.r);
     return (this.r)
   }
 }

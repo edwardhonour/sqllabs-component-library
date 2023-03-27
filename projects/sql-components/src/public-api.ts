@@ -26,3 +26,4 @@ export * from './lib/sql-data-menu/sql-data-menu.component';
 export * from './lib/sql-data-select/sql-data-select.component';
 export * from './lib/sql-default-value/sql-default-value.component';
 export * from './lib/pre-insert-trigger/pre-insert-trigger.component';
+export * from './lib/sql.resolver';

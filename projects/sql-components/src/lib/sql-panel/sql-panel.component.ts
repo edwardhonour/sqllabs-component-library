@@ -50,16 +50,17 @@ export class SqlPanelComponent implements OnInit, DoCheck, OnChanges, AfterViewI
     private _router: Router,
     private _activatedRoute: ActivatedRoute) {
       if (this.use_router=='Y') {      
-        this.myObs = this._dataService.routerSubject.subscribe(d => {
+        this.myObs = this._dataService.paramSubject.subscribe(d => {
           if (d.page!==undefined) { this.page=d.page; }
           if (d.id!==undefined) { this.id=d.id; }
           if (d.id2!==undefined) { this.id2=d.id2; }
           if (d.id3!==undefined) { this.id3=d.id3; }
-          this._dataService.paramSubject.next(d);
-          this._dataService.containerSubject.next(d);
+          console.log('getting param subject')
+          console.log(d)
+          //this._dataService.containerSubject.next(d);
         })
       }
-     }
+  }
 
   ngOnInit() {
 
@@ -69,6 +70,7 @@ export class SqlPanelComponent implements OnInit, DoCheck, OnChanges, AfterViewI
     this.parameters.id=this.id;
     this.parameters.id2=this.id2;
     this.parameters.id3=this.id3;
+    console.log(this.parameters);
     this.myObs = this._dataService.getSelect(this.sql, this.parameters).subscribe((data:any)=>{
       this.data=data[0];
       this._dataService.pageSubject.next(this.data);

@@ -65,7 +65,7 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
           this.id=this.containerParameters.id;
           if (this.containerParameters.id2!==undefined) { this.id2=this.containerParameters.id2; }
           if (this.containerParameters.id3!==undefined) { this.id3=this.containerParameters.id3; }
-          this.ngAfterViewInit();
+          this.getFormData();
         }
       })
     }     
@@ -87,18 +87,24 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
 
   }
 
+  getFormData() {
+    this.parameters.id=this.id;
+    if (this.table!='dual') {
+      this._dataService.getForm(this.table, this.parameters).subscribe((data:any)=>{
+          this.data=data;
+          if (this.default_col!='') { this.data[this.default_col]=this.default_value }
+          if (this.default_col2!='') { this.data[this.default_col2]=this.default_value2 }        
+          if (this.default_col3!='') { this.data[this.default_col3]=this.default_value3 }                
+          this._dataService.pushNotification(this.data);
+    });
+  }
+  }
+
   ngAfterViewInit(): void {
-      console.log('AVI')
-      this.parameters.id=this.id;
-      if (this.table!='dual') {
-        this._dataService.getForm(this.table, this.parameters).subscribe((data:any)=>{
-            this.data=data;
-            if (this.default_col!='') { this.data[this.default_col]=this.default_value }
-            if (this.default_col2!='') { this.data[this.default_col2]=this.default_value2 }        
-            if (this.default_col3!='') { this.data[this.default_col3]=this.default_value3 }                
-            this._dataService.pushNotification(this.data);
-      });
-    }
+      console.log('AVI geting form')
+      if (this.embedded!=='Y') {
+        this.getFormData();
+      }
   }
 
   postSQL() {
