@@ -3,7 +3,6 @@ import { HttpClient, HttpClientModule, HttpHeaders, HttpParams } from '@angular/
 import { BehaviorSubject, of } from 'rxjs';
 import * as CryptoJS from 'crypto-js';
 
-
 @Injectable({
   providedIn: 'root'
 })

@@ -16,11 +16,14 @@ import { Subscription } from 'rxjs';
 export class SqlPanelComponent implements OnInit, DoCheck, OnChanges, AfterViewInit, OnDestroy  {
   
   //-- Inputs
-  @Input() use_router: any = 'Y';                         // does data come from Router.
+  @Input() use_router: any = 'Y';                         // does parameters come from Router.
   @Input() page: any = '';
-  @Input() data: any;                                     // Depreciated
+  @Input() data: any;                                    
   @Input() sql: any = "";                                 // query to populate panel.          
-  @Input() id: any = '0';                                 // Primary key for query.
+  @Input() subquery: any = "";                            // subquery 1-3 go into parameters,
+  @Input() subquery2: any = "";
+  @Input() subquery3: any = "";
+  @Input() id: any = '0';                                 // ID - ID3 go into parameters.
   @Input() id2: any = '0'; 
   @Input() id3: any = '0'; 
   @Input() card: any = "Y";                               // Show the panel in a card Y/N
@@ -53,6 +56,7 @@ export class SqlPanelComponent implements OnInit, DoCheck, OnChanges, AfterViewI
           if (d.id2!==undefined) { this.id2=d.id2; }
           if (d.id3!==undefined) { this.id3=d.id3; }
           this._dataService.paramSubject.next(d);
+          this._dataService.containerSubject.next(d);
         })
       }
      }
@@ -68,7 +72,6 @@ export class SqlPanelComponent implements OnInit, DoCheck, OnChanges, AfterViewI
     this.myObs = this._dataService.getSelect(this.sql, this.parameters).subscribe((data:any)=>{
       this.data=data[0];
       this._dataService.pageSubject.next(this.data);
-      this._dataService.containerSubject.next(this.data);
     });
   }
   
