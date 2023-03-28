@@ -30,6 +30,7 @@ export class SqlMenuComponent implements OnInit, AfterViewInit, OnDestroy  {
   
   //-- Inputs
   @Input() title: any = '';                               // title of the page.
+  @Input() active: any = '0';
   @Input() use_parameters = 'N';
   @Input() data: any = '';                                // Use Data if data comes from function.
   @Input() card: any = "Y";                               // Show the form in a card Y/N
@@ -100,6 +101,15 @@ export class SqlMenuComponent implements OnInit, AfterViewInit, OnDestroy  {
        this.list.push(template);
   });
   
+  this.list.forEach((e: any)=> {
+    console.log('e.id: ' + e.id + ' ' + ' active: ' + this.active)
+    if (e.id==this.active) {
+      e.active='Y';
+    } else {
+      e.active='N';
+        }
+  });
+
   }
 
   ngOnDestroy(): void {

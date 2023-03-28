@@ -1,13 +1,12 @@
 <div class="card" [style]="style">
     <div class="card-header" style="margin-top: 0px;">
-        <div class="row align-items-center justify-items-end">
-            <div class="col-9 col-lg-10 col-xl-11"><div [class]="title_class" [style]="title_style">{{ title }}</div></div>
-            <div class="col-3 col-lg-2 col-xl-1 align-self-end float-end">
-                <button (click)="toggleClosed()" *ngIf="closed=='Y'" [class]="button_class" [style]="button_style"><i class="bi bi-arrow-bar-down"></i></button>
-                <button (click)="toggleClosed()" *ngIf="closed=='N'" [class]="button_class" [style]="button_style"><i class="bi bi-arrow-bar-up"></i></button>
+            <div class="col-9 col-lg-10 col-xl-11">
+                <span [class]="title_class" [style]="title_style">{{ title }}</span>
+                  <span class="align-self-end float-end" style="text-align: right;">
+                    <button (click)="toggleClosed()" *ngIf="closed=='Y'" [class]="button_class" [style]="button_style"><i class="bi bi-arrow-bar-down"></i></button>
+                   <button (click)="toggleClosed()" *ngIf="closed=='N'" [class]="button_class" [style]="button_style"><i class="bi bi-arrow-bar-up"></i></button>
+                </span>
             </div>
-        </div>
-        <h2></h2>
     </div>
     <div *ngIf="closed=='N'" class="card-body p-2">
         <ng-content></ng-content>
