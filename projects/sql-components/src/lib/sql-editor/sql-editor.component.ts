@@ -39,6 +39,7 @@ export class SqlEditorComponent implements OnInit, AfterViewInit, OnDestroy  {
   myObs!: Subscription;
 
   @Input() preview: string = 'Y';
+  @Input() edit: string = 'Y';  
   @Input() col: string = '';
   @Input() data: any;
   @Input() class: any = '';
@@ -52,6 +53,7 @@ export class SqlEditorComponent implements OnInit, AfterViewInit, OnDestroy  {
   @Input() bs_col: any = 'col-12';
   @Input() top_label: any = 'N';
   counter: number = 0;
+  showing_preview: string = 'N';
   @Output()
   change: EventEmitter<any> = new EventEmitter<any>();  
   
@@ -65,19 +67,27 @@ export class SqlEditorComponent implements OnInit, AfterViewInit, OnDestroy  {
       this.data=d;
       this.fieldData = this.data;
       if (this.fieldData[this.col]===undefined) {
-        this.value = [];
+        this.value = JSON.parse('{ "type": "doc", "content": [] }');
         this.editordoc = "";
       } else {
             if (this.fieldData[this.col]!=='') {
-              this.value = this.fieldData[this.col];
+              this.value = JSON.parse(this.fieldData[this.col]);
               this.editordoc = toHTML(this.value);
             } else {
-              //this.value = [];
+              this.value = JSON.parse('{ "type": "doc", "content": [] }');
               this.editordoc="";
             }
       }
       this.counter++;
     })
+  }
+
+  showPreview() {
+    this.edit='Y';
+  }
+
+  showEdit() {
+    this.edit='N';
   }
 
   ngOnInit(): void {
@@ -86,7 +96,8 @@ export class SqlEditorComponent implements OnInit, AfterViewInit, OnDestroy  {
 
   handleChange() {
      this.fieldData['submit']='N';
-     this.fieldData[this.col]=this.value;
+     this.fieldData[this.col]=JSON.stringify(this.value);
+     this.editordoc = toHTML(this.value);
      this._dataService.pushNotification(this.fieldData);
   }
 

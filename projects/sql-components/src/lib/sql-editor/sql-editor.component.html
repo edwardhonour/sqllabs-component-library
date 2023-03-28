@@ -1,9 +1,32 @@
-<span>
-  <span>{{ label }}</span>
-    <div class="card-body">
-        <div class="editor" [style]="style">
-          <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
-          <ngx-editor [editor]="editor" (ngModelChange)="handleChange();" [(ngModel)]="value"></ngx-editor>
+<div *ngIf="preview=='Y'">
+  <div class="row">
+    <div class="col-12" style="text-align: right;">
+       <button (click)="showPreview()"; class="btn dark" style="margin-right: 20px;"><i class="bi bi-binoculars"></i></button>
+       <button (click)="showEdit()"; class="btn dark"><i class="bi bi-pencil-square"></i></button>
+    </div>
+  </div>
+    <div *ngIf="edit=='N'" class="card">
+        <div class="card-body">
+              {{ editordoc }}
         </div>
     </div>
-</span>
+    <div *ngIf="edit=='Y'">
+      <span>
+        <span>{{ label }}</span>
+              <div class="editor" [style]="style">
+                <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+                <ngx-editor [editor]="editor" (ngModelChange)="handleChange();" [(ngModel)]="value"></ngx-editor>
+              </div>
+      </span>
+    </div>
+</div>
+
+<div *ngIf="preview=='Y'">
+  <span>
+    <span>{{ label }}</span>
+          <div class="editor" [style]="style">
+            <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+            <ngx-editor [editor]="editor" (ngModelChange)="handleChange();" [(ngModel)]="value"></ngx-editor>
+          </div>
+  </span>
+</div>

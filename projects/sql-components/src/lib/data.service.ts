@@ -143,9 +143,12 @@ export class SQLDataService {
 
     this.getLocalStorage();
 
-    let triggers=formData.triggers;
-    let k = CryptoJS.AES.encrypt(JSON.stringify(triggers), this.TheSecret, {format: CryptoJSAesJson}).toString();
-    formData.triggers=k;
+    console.log(formData.triggers)
+    if (formData.triggers!==undefined) {
+      let triggers=formData.triggers;
+      let k = CryptoJS.AES.encrypt(JSON.stringify(triggers), this.TheSecret, {format: CryptoJSAesJson}).toString();
+      formData.triggers=k;
+    }
 
     const data = {
       "q" : "postform",
