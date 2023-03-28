@@ -1,0 +1,9 @@
+<span>
+  <span>{{ label }}</span>
+    <div class="card-body">
+        <div class="editor" [style]="style">
+          <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+          <ngx-editor [editor]="editor" (ngModelChange)="handleChange();" [(ngModel)]="value"></ngx-editor>
+        </div>
+    </div>
+</span>

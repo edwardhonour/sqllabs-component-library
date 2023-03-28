@@ -10,7 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'lib-sql-data-select',
+  selector: 'sql-data-select',
   standalone: true,
   imports: [CommonModule, FormsModule, MatFormFieldModule, 
     MatInputModule, MatOptionModule, MatSelectModule],
