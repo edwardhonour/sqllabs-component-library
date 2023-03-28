@@ -83,11 +83,11 @@ export class SqlEditorComponent implements OnInit, AfterViewInit, OnDestroy  {
   }
 
   showPreview() {
-    this.edit='Y';
+    this.edit='N';
   }
 
   showEdit() {
-    this.edit='N';
+    this.edit='Y';
   }
 
   ngOnInit(): void {

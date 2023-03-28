@@ -1,32 +1,30 @@
 <div *ngIf="preview=='Y'">
-  <div class="row">
-    <div class="col-12" style="text-align: right;">
-       <button (click)="showPreview()"; class="btn dark" style="margin-right: 20px;"><i class="bi bi-binoculars"></i></button>
-       <button (click)="showEdit()"; class="btn dark"><i class="bi bi-pencil-square"></i></button>
-    </div>
-  </div>
-    <div *ngIf="edit=='N'" class="card">
-        <div class="card-body">
-              {{ editordoc }}
+  <div class="card">
+    <div class="card-body">
+       {{ label }} <button (click)="showPreview()" class="btn dark" style="margin-left: 10px; margin-right: 10px;"><i class="bi bi-binoculars"></i></button>
+       <button (click)="showEdit()" class="btn dark"><i class="bi bi-pencil-square"></i></button>
+  <div *ngIf="edit=='N'" class="card">
+        <div class="card-body" [innerHTML]="editordoc">
         </div>
-    </div>
-    <div *ngIf="edit=='Y'">
+  </div>
+  <div *ngIf="edit=='Y'">
       <span>
-        <span>{{ label }}</span>
-              <div class="editor" [style]="style">
-                <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
-                <ngx-editor [editor]="editor" (ngModelChange)="handleChange();" [(ngModel)]="value"></ngx-editor>
-              </div>
+        <ng-container *ngTemplateOutlet="contentTmpl"></ng-container>
       </span>
     </div>
 </div>
+</div>
+</div>
+<div *ngIf="preview=='N'">
+  <span>{{ label }}</span>
+  <ng-container *ngTemplateOutlet="contentTmpl"></ng-container>
+</div>
 
-<div *ngIf="preview=='Y'">
-  <span>
-    <span>{{ label }}</span>
+<ng-template #contentTmpl>
+    <span>
           <div class="editor" [style]="style">
             <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
             <ngx-editor [editor]="editor" (ngModelChange)="handleChange();" [(ngModel)]="value"></ngx-editor>
           </div>
   </span>
-</div>
+</ng-template>
