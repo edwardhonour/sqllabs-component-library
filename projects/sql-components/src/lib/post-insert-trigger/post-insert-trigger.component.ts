@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 
 
 @Component({
-  selector: 'lib-post-insert-trigger',
+  selector: 'post-insert-trigger',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './post-insert-trigger.component.html',
@@ -24,7 +24,7 @@ export class PostInsertTriggerComponent implements AfterViewInit, OnChanges, OnD
   }
 
   ngOnDestroy(): void {
-    this.myObs.unsubscribe();
+ //   this.myObs.unsubscribe();
   }
 
   ngOnChanges(changes: SimpleChanges): void {

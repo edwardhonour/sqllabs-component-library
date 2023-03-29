@@ -30,3 +30,4 @@ export * from './lib/pre-update-trigger/pre-update-trigger.component';
 export * from './lib/post-insert-trigger/post-insert-trigger.component';
 export * from './lib/sql-editor/sql-editor.component';
 export * from './lib/sql.resolver';
+export * from './lib/data.service';
