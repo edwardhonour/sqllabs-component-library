@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Delete Record</h1>
+<div mat-dialog-content>
+  Are you sure to want to delete this record?  This cannot be reversed.
+</div>
+<div mat-dialog-actions>
+  <button class="btn btn-primary" mat-dialog-close>No</button>
+  <button (click)="handleClick()" class="btn btn-danger" mat-dialog-close cdkFocusInitial>Yes</button>
+</div>

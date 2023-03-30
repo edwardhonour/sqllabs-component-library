@@ -79,6 +79,9 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
         if (this.data.submit==='Y') {
           this.postSQL();
         }
+        if (this.data.submit==='D') {
+          this.postDelete();
+        }
       })
 
    }
@@ -132,6 +135,31 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
 
   }
   
+  postDelete() {
+    this._dataService.postDelete(this.data).subscribe((data:any)=>{
+      if (data.error_code=="0") { 
+        this.showSuccessAlert='Y';
+        this.showErrorAlert='N';
+        this.errorMessage='Record Saved';
+      } else {
+        this.showSuccessAlert='N';
+        this.showErrorAlert='Y';
+        this.errorMessage=data.error_message;
+        this.errorMessage='Record Saved';
+      }
+      
+      setTimeout(()=>{
+        this.showErrorAlert='N';
+        this.showSuccessAlert='N';
+        this.data.refresh='Y';
+        this.data.submit='N';
+        this._dataService.pushNotification(data);
+      },1000);
+
+    });
+
+  }
+
   ngDoCheck(): void {
 
   }

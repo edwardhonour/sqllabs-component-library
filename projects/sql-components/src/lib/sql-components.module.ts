@@ -14,6 +14,8 @@ import { SqlTextareaComponent } from './sql-textarea/sql-textarea.component';
 import { SqlCalendarComponent } from './sql-calendar/sql-calendar.component';
 import { SqlRadioGroupComponent } from './sql-radio-group/sql-radio-group.component';
 import { SqlTableComponent } from './sql-table/sql-table.component';
+import { SqlEditTableComponent } from './sql-edit-table/sql-edit-table.component'; 
+import { SqlSubmitComponent } from './sql-submit/sql-submit.component'; 
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { SqlTableComponent } from './sql-table/sql-table.component';
     SqlSelectComponent,
     SqlTextareaComponent,
     SqlRadioGroupComponent,
-    SqlTableComponent
+    SqlTableComponent,
+    SqlEditTableComponent,
+    SqlSubmitComponent
   ],
   exports: [
     SqlComponentsComponent,
@@ -50,7 +54,9 @@ import { SqlTableComponent } from './sql-table/sql-table.component';
     SqlSelectComponent,
     SqlTextareaComponent,
     SqlRadioGroupComponent,
-    SqlTableComponent
+    SqlTableComponent,
+    SqlEditTableComponent,
+    SqlSubmitComponent
   ]
 })
 export class SqlComponentsModule { }

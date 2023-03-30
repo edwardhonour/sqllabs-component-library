@@ -161,6 +161,46 @@ export class SQLDataService {
 
   }
 
+  postDelete(formData: any) {
+
+    var CryptoJSAesJson = {
+      stringify: function (cipherParams: any) {
+        var j: any = { ct: cipherParams.ciphertext.toString(CryptoJS.enc.Base64) };
+        if (cipherParams.iv) j.iv = cipherParams.iv.toString();
+        if (cipherParams.salt) j.s = cipherParams.salt.toString();
+        return JSON.stringify(j);
+      },
+      parse: function (jsonStr: any) {
+        var j = JSON.parse(jsonStr);
+        var cipherParams = CryptoJS.lib.CipherParams.create({
+          ciphertext: CryptoJS.enc.Base64.parse(j.ct),
+        });
+        if (j.iv) cipherParams.iv = CryptoJS.enc.Hex.parse(j.iv);
+        if (j.s) cipherParams.salt = CryptoJS.enc.Hex.parse(j.s);
+        return cipherParams;
+      },
+    };
+
+    this.getLocalStorage();
+
+    console.log(formData.triggers)
+    if (formData.triggers!==undefined) {
+      let triggers=formData.triggers;
+      let k = CryptoJS.AES.encrypt(JSON.stringify(triggers), this.TheSecret, {format: CryptoJSAesJson}).toString();
+      formData.triggers=k;
+    }
+
+    const data = {
+      "q" : "postdelete",
+      "data": formData,
+      "uid": this.uid
+    }
+
+  this.t= this.http.post(this.base+"sqlcomponents.php", data);
+  return this.t;
+
+  }
+
   getData(path: any, id: any, id2: any, id3: any) {
     this.getLocalStorage();
     const data = {

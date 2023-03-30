@@ -9,6 +9,8 @@ export * from './lib/sql-form/sql-form.component';
 export * from './lib/sql-input/sql-input.component';
 export * from './lib/sql-checkbox/sql-checkbox.component';
 export * from './lib/sql-select/sql-select.component';
+export * from './lib/sql-delete/sql-delete.component';
+export * from './lib/sql-delete-dialog/sql-delete-dialog.component';
 export * from './lib/sql-textarea/sql-textarea.component';
 export * from './lib/sql-calendar/sql-calendar.component';
 export * from './lib/sql-radio-group/sql-radio-group.component';
