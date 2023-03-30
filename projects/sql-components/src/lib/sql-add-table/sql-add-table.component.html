@@ -37,7 +37,8 @@
                     <th *ngIf="m.type!='button'" [style]="m.style" class="p-2">{{ m.title }}</th>
                     <th *ngIf="m.type=='button'" [style]="m.style" class="p-2"></th>
                 </ng-container>   
-                <th *ngIf="edit=='Y'"></th>  
+                <td *ngIf="edit=='Y'">
+                </td>
             </thead>
         <tbody>
         <ng-container *ngFor="let m of list | filter: term | paginate: { currentPage: p , itemsPerPage: format.pagesize }">
