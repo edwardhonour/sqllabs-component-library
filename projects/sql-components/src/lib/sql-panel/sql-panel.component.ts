@@ -49,30 +49,40 @@ export class SqlPanelComponent implements OnInit, DoCheck, OnChanges, AfterViewI
   constructor(private _dataService: SQLDataService, 
     private _router: Router,
     private _activatedRoute: ActivatedRoute) {
-      if (this.use_router=='Y') {      
-        this.myObs = this._dataService.paramSubject.subscribe(d => {
-          console.log('ur');
-          console.log(d);
-          if (d.page!==undefined) { this.page=d.page; }
-          if (d.id!==undefined) { this.id=d.id; }
-          if (d.id2!==undefined) { this.id2=d.id2; }
-          if (d.id3!==undefined) { this.id3=d.id3; }
-          if (this.page!=='AAA') {
-            this.myObs = this._dataService.getSQL(this.sql, d).subscribe((data:any)=>{
-              console.log('panel init ds');
-              this.data=data[0];
-              console.log(this.data);
-              this._dataService.pageSubject.next(this.data);
-              if (this.data.id2===undefined) { this.data.id2 = ''; }
-              if (this.data.id3===undefined) { this.data.id3 = ''; }
-              this._dataService.containerSubject.next(this.data);
-            });
-          }
-        })
-      }
   }
 
   ngOnInit() {
+    
+    if (this.use_router=='Y') { 
+      setTimeout(() => {
+            this.myObs = this._dataService.paramSubject.subscribe(d => {
+              console.log('paramSubjct.subscribe');
+              console.log(d);
+              if (d.page!==undefined) { this.page=d.page; }
+              if (d.id!==undefined) { this.id=d.id; }
+              if (d.id2!==undefined) { this.id2=d.id2; }
+              if (d.id3!==undefined) { this.id3=d.id3; }
+              if (this.page!=='AAA') {
+                console.log('sql: ' + this.sql)
+                console.log(d);
+                this.parameters.page="";
+                this.parameters.id=this.id;
+                this.parameters.id2=this.id2;
+                this.parameters.id3=this.id3;
+                console.log(this.parameters);
+                this.myObs = this._dataService.getSQL(this.sql, this.parameters).subscribe((data:any)=>{
+                  console.log('panel init ds');
+                  this.data=data[0];
+                  console.log(this.data);
+                  this._dataService.pageSubject.next(this.data);
+                  if (this.data.id2===undefined) { this.data.id2 = ''; }
+                  if (this.data.id3===undefined) { this.data.id3 = ''; }
+                  this._dataService.containerSubject.next(this.data);
+                });
+              }
+            })
+      }, 500);
+    }
 
   }
       

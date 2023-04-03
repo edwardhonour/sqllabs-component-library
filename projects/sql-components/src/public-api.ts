@@ -30,6 +30,7 @@ export * from './lib/sql-default-value/sql-default-value.component';
 export * from './lib/pre-insert-trigger/pre-insert-trigger.component';
 export * from './lib/pre-update-trigger/pre-update-trigger.component';
 export * from './lib/post-insert-trigger/post-insert-trigger.component';
+export * from './lib/sql-data-preview/sql-data-preview.component';
 export * from './lib/sql-editor/sql-editor.component';
 export * from './lib/sql.resolver';
 export * from './lib/data.service';

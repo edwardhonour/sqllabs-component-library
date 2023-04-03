@@ -10,7 +10,7 @@ export class SQLDataService {
 
   public dataSubject = new BehaviorSubject<any>({});
   public pageSubject = new BehaviorSubject<any>({});
-  public paramSubject = new BehaviorSubject<any>({ page: "", id: "", id2: "", id3: "" });
+  public paramSubject = new BehaviorSubject<any>({ page: "AAA", id: "", id2: "", id3: "" });
   public routerSubject = new BehaviorSubject<any>({});
   public containerSubject = new BehaviorSubject<any>({ id: "", id2: "", id3: "" });
 
@@ -66,6 +66,20 @@ export class SQLDataService {
     this.getLocalStorage();
     const data = {
       "q" : 'getselect',
+      "sql": sql,   
+      "parameters": params,   
+      "uid": this.uid
+    }
+
+  this.t= this.http.post(this.base+"sqlcomponents.php", data);
+  return this.t;
+
+  }
+
+  getColumns(sql: any, params: any) {
+    this.getLocalStorage();
+    const data = {
+      "q" : 'getcolumns',
       "sql": sql,   
       "parameters": params,   
       "uid": this.uid

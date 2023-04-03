@@ -1,0 +1,55 @@
+<!-- NOT A CARD FORMAT-->
+<div *ngIf="card!='Y'" [class]="container_class" [style]="container_style">
+        <div class="card">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" *ngIf="title!=''" style="background-color: lightgray;" [innerHTML]="title"></li>
+                        <ng-container *ngFor="let m of format.columns">
+                            <li class="list-group-item" *ngIf="m.type=='data'">
+                                <div class="row">
+                                    <div class="col-6">
+                                    <b>{{ m.title }}</b>
+                                    </div>
+                                    <div class="col-6" [innerHTML]="list[m.value]">
+                                    </div>
+                                </div>
+                            </li>  
+                            <li class="list-group-item" *ngIf="m.type!='data'">
+                                <div class="row">
+                                    <div class="col-12">
+                                    <b>{{ m.title }}</b>
+                                    </div>
+                                </div>
+                            </li>    
+                        </ng-container>     
+                    </ul>
+        </div>              
+</div>
+<div *ngIf="card=='Y'" [class]="container_class" [style]="container_style">
+    <div class="card">
+        <div class="card-header">
+          {{ title }}
+        </div>
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <ng-container *ngFor="let m of format.columns">
+                    <li class="list-group-item" *ngIf="m.type=='data'" class="p-2">
+                        <div class="row">
+                            <div class="col-6">
+                            <b>{{ m.title }}</b>
+                            </div>
+                            <div class="col-6" [innerHTML]="list[m.value]">
+                            </div>
+                        </div>
+                    </li>  
+                    <li class="list-group-item" *ngIf="m.type!='data'" class="p-2">
+                        <div class="row">
+                            <div class="col-12">
+                            <b>{{ m.title }}</b>
+                            </div>
+                        </div>
+                    </li>    
+                </ng-container>     
+            </ul>
+        </div>
+      </div>
+</div>
