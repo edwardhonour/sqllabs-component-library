@@ -10,7 +10,7 @@ export class SQLDataService {
 
   public dataSubject = new BehaviorSubject<any>({});
   public pageSubject = new BehaviorSubject<any>({});
-  public paramSubject = new BehaviorSubject<any>({});
+  public paramSubject = new BehaviorSubject<any>({ page: "", id: "", id2: "", id3: "" });
   public routerSubject = new BehaviorSubject<any>({});
   public containerSubject = new BehaviorSubject<any>({ id: "", id2: "", id3: "" });
 

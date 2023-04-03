@@ -8,7 +8,7 @@ import { SqlDeleteDialogComponent } from '../sql-delete-dialog/sql-delete-dialog
 
 
 @Component({
-  selector: 'lib-sql-delete',
+  selector: 'sql-delete',
   standalone: true,
   imports: [CommonModule, SqlDialogComponent],
   templateUrl: './sql-delete.component.html',

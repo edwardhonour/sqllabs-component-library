@@ -37,8 +37,8 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
   @Input() class: any = "";                              
   @Input() style: any = "";                              
   @Input() title: any = "";                              
-  @Input() bs_row: any = 'Y';                             
-  @Input() bs_col: any = 'col-sm-12 col-lg-6 col-xl-4';   
+  @Input() bs_row: any = 'N';                             
+  @Input() bs_col: any = '';   
   @Input() handler: any = 'default';                      
 
   parameters: any = { page: '', id: '', id2: '', id3: ''};
