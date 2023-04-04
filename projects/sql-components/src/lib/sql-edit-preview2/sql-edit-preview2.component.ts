@@ -156,7 +156,7 @@ export class SqlEditPreview2Component implements OnInit, AfterViewInit, OnDestro
 
     if (e.nativeElement.className!==undefined) { right_column_template.class=e.nativeElement.className; }
     right_column_template.style=e.nativeElement.style.cssText;
-    this.format.left_column.push(right_column_template);
+    this.format.right_column.push(right_column_template);
   });
 
   

@@ -20,7 +20,7 @@
                             <button (click)="addClick()" class="btn btn-secondary">Close</button>
                         </div>
                     </div>
-                    <li class="list-group-item" *ngIf="format.title!=''">
+                    <li *ngIf="adding!='Y'" class="list-group-item">
                         <div class="row">
                             <div class="col-4">
                                 <ul class="list-group list-group-flush">
@@ -105,7 +105,14 @@
             </div>
         </div>
     </div>
-    <div class="card-body">
+    <div  *ngIf="adding=='Y'" class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <ng-container *ngTemplateOutlet="contentTmpl"></ng-container>
+            </div>
+        </div>
+    </div>       
+    <div  *ngIf="adding!='Y'" class="card-body">
         <div class="row">
             <div class="col-6">
                 <ul class="list-group list-group-flush">
@@ -153,8 +160,9 @@
             </div>            
         </div>
     </div>
-  </div>
-</div>
+    </div>
+    </div>
+    
 <ng-template #contentTmpl>
     <ng-content select="[form]"></ng-content>
 </ng-template>

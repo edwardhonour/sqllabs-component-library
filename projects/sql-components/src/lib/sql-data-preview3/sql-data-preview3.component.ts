@@ -144,7 +144,7 @@ export class SqlDataPreview3Component implements OnInit, AfterViewInit, OnDestro
 
     if (e.nativeElement.className!==undefined) { center_column_template.class=e.nativeElement.className; }
     center_column_template.style=e.nativeElement.style.cssText;
-    this.format.left_column.push(center_column_template);
+    this.format.center_column.push(center_column_template);
   });
 
   this.right_row_list.forEach((e: ElementRef) => {
@@ -165,7 +165,7 @@ export class SqlDataPreview3Component implements OnInit, AfterViewInit, OnDestro
 
     if (e.nativeElement.className!==undefined) { right_column_template.class=e.nativeElement.className; }
     right_column_template.style=e.nativeElement.style.cssText;
-    this.format.left_column.push(right_column_template);
+    this.format.right_column.push(right_column_template);
   });
 
   

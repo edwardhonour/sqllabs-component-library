@@ -2,7 +2,7 @@
 <div *ngIf="card!='Y'" [class]="container_class" [style]="container_style">
     <div class="card">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item" *ngIf="format.title!=''" style="background-color: lightgray;">
+                    <li class="list-group-item" style="background-color: lightgray;">
                         <div class="row" style="width:100%;">
                             <div class="col-md-9">
                                 <h2>{{ title }}</h2>
@@ -20,7 +20,7 @@
                             <button (click)="addClick()" class="btn btn-secondary">Close</button>
                         </div>
                     </div>
-                    <li class="list-group-item" *ngIf="format.title!=''">
+                    <li class="list-group-item" *ngIf="adding!='Y'">
                         <div class="row">
                             <div class="col-6">
                                 <ul class="list-group list-group-flush">

@@ -2,7 +2,7 @@
 <div *ngIf="card!='Y'" [class]="container_class" [style]="container_style">
     <div class="card">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item" *ngIf="format.title!=''" style="background-color: lightgray;">
+                    <li class="list-group-item" style="background-color: lightgray;">
                         <div class="row" style="width:100%;">
                             <div class="col-md-9">
                                 <h2>{{ title }}</h2>
@@ -12,6 +12,7 @@
                             </div>
                         </div>
                     </li>
+                    <ng-container *ngIf="adding=='N'">
                     <ng-container *ngFor="let m of format.columns">
                         <li class="list-group-item" *ngIf="m.type=='data'">
                             <div class="row">
@@ -30,6 +31,7 @@
                             </div>
                         </li>    
                     </ng-container>     
+                </ng-container>
                 </ul>
     </div>              
 </div>
@@ -54,7 +56,7 @@
                 <button (click)="addClick()" class="btn btn-secondary">Close</button>
             </div>
         </div>
-        <ul class="list-group list-group-flush">
+        <ul *ngIf="adding=='N'"  class="list-group list-group-flush">
             <ng-container *ngFor="let m of format.columns">
                 <li class="list-group-item" *ngIf="m.type=='data'" class="p-2">
                     <div class="row">
