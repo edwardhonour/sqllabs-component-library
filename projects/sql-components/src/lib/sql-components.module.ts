@@ -15,7 +15,7 @@ import { SqlCalendarComponent } from './sql-calendar/sql-calendar.component';
 import { SqlRadioGroupComponent } from './sql-radio-group/sql-radio-group.component';
 import { SqlTableComponent } from './sql-table/sql-table.component';
 import { SqlEditTableComponent } from './sql-edit-table/sql-edit-table.component'; 
-import { SqlSubmitComponent } from './sql-submit/sql-submit.component'; 
+import { SqlSubmitComponent } from './sql-submit/sql-submit.component';
 
 @NgModule({
   declarations: [

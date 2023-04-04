@@ -29,6 +29,9 @@
         <div class="card-header">
           {{ title }}
         </div>
+        <div *ngIf="adding=='Y'" class="card-body">
+
+        </div>
         <div class="card-body">
             <ul class="list-group list-group-flush">
                 <ng-container *ngFor="let m of format.columns">

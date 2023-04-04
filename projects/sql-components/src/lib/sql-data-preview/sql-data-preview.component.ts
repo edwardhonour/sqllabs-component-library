@@ -60,6 +60,8 @@ data: any = '';
 parameters: any = { page: '', id: '', id2: '', id3: ''};
 last_parameters: any = { page: 'xxx', id: 'xxx', id2: 'xxx', id3: 'xxx' }
 
+adding: any = 'N';
+
 counter: number = 0;
 page: any = '';
 
