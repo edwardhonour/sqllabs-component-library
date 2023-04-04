@@ -2,14 +2,14 @@
 <div *ngIf="card!='Y'" [class]="container_class" [style]="container_style">
         <div class="card">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item" *ngIf="title!=''" style="background-color: lightgray;" [innerHTML]="title"></li>
+                        <li class="list-group-item" *ngIf="format.title!=''" style="background-color: lightgray;">{{ title }}</li>
                         <ng-container *ngFor="let m of format.columns">
                             <li class="list-group-item" *ngIf="m.type=='data'">
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div [class]="left">
                                     <b>{{ m.title }}</b>
                                     </div>
-                                    <div class="col-6" [innerHTML]="list[m.value]">
+                                    <div [class]="right" [innerHTML]="list[m.value]">
                                     </div>
                                 </div>
                             </li>  
@@ -34,10 +34,10 @@
                 <ng-container *ngFor="let m of format.columns">
                     <li class="list-group-item" *ngIf="m.type=='data'" class="p-2">
                         <div class="row">
-                            <div class="col-6">
+                            <div [class]="left">
                             <b>{{ m.title }}</b>
                             </div>
-                            <div class="col-6" [innerHTML]="list[m.value]">
+                            <div [class]="right" [innerHTML]="list[m.value]">
                             </div>
                         </div>
                     </li>  

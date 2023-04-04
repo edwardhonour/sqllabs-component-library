@@ -47,7 +47,10 @@ data: any = '';
 
 @Input() id: any = '0';        
 @Input() id2: any = '0';    
-@Input() id3: any = '0';       
+@Input() id3: any = '0';      
+@Input() left: any = 'col-6';
+@Input() right: any = 'col-6';
+
 
 @Input() class: any = '';  
 @Input() style: any = "";                            
@@ -90,11 +93,9 @@ ngAfterViewInit(): void {
       this.parameters.id=this.id;
       this.parameters.id2=this.id2;
       this.parameters.id3=this.id3;
+      console.log(this.parameters);
       this._dataService.getSQL(this.sql, this.parameters).subscribe((data:any)=>{
-        this.list=data;
-        this.list.forEach(function (value: any) {
-//          value.active='N';
-        });
+        if (data[0]!==undefined) { this.list=data[0]; }
        });
   }
 
@@ -132,9 +133,14 @@ if (this.last_parameters.page!=this.parameters.page||
           this.last_parameters.id=this.parameters.id;
           this.last_parameters.id2=this.parameters.id2;
           this.last_parameters.id3=this.parameters.id3;
-
+          console.log("Getting SQL")
+          console.log(this.sql);
+          console.log(this.parameters);
           this.myDataObs = this._dataService.getSQL(this.sql, this.parameters).subscribe((data:any)=>{
-            if (data[0]!==undefined) { this.list=data[0]; }
+            if (data[0]!==undefined) { 
+              this.list=data[0]; 
+              console.log(this.list)
+            }
           });
     }
 }
