@@ -113,7 +113,7 @@ export class SqlMenuComponent implements OnInit, AfterViewInit, OnDestroy  {
   }
 
   ngOnDestroy(): void {
-    this.myObs.unsubscribe();
-    this.myDataObs.unsubscribe();
+//    this.myObs.unsubscribe();
+ //   this.myDataObs.unsubscribe();
   }
   }
