@@ -23,6 +23,8 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
   @Input() id: any = '0';         
   @Input() id2: any = '0';         
   @Input() id3: any = '0';
+  @Input() id2_col: any = '';
+  @Input() id3_col: any = '';
   @Input() default_col: any = '';  
   @Input() default_col2: any = '';  
   @Input() default_col3: any = '';   
@@ -65,9 +67,14 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
           this.id=this.containerParameters.id;
           if (this.containerParameters.id2!==undefined) { this.id2=this.containerParameters.id2; }
           if (this.containerParameters.id3!==undefined) { this.id3=this.containerParameters.id3; }
+          if (this.containerParameters.default_col!==undefined) { this.default_col=this.containerParameters.default_col; }
+          if (this.containerParameters.default_col2!==undefined) { this.default_col=this.containerParameters.default_col2; }
+          if (this.containerParameters.default_col3!==undefined) { this.default_col=this.containerParameters.default_col3; }
           this.getFormData();
         }
       })
+    } else {
+
     }     
     this.myDataObs = this._dataService.dataSubject.subscribe(d => {
         console.log('data subject')
@@ -92,6 +99,11 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
 
   getFormData() {
     this.parameters.id=this.id;
+    this.parameters.id=this.id2;
+    this.parameters.id=this.id3;
+    this.parameters.default_col=this.default_col;
+    this.parameters.default_col2=this.default_col2;
+    this.parameters.default_col3=this.default_col3;
     if (this.table!='dual') {
       this._dataService.getForm(this.table, this.parameters).subscribe((data:any)=>{
           this.data=data;

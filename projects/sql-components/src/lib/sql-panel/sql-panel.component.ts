@@ -33,7 +33,7 @@ export class SqlPanelComponent implements OnInit, DoCheck, OnChanges, AfterViewI
   @Input() style: any = "";                               // Style for the panel container.
   @Input() title: any = "";                               // Title of the Panel.
   @Input() bs_row: any = 'Y';                             // Y means add a bootstrap row.
-  @Input() bs_col: any = 'col-sm-12 col-lg-6 col-xl-4';   // What bootstrap columns.
+  @Input() bs_col: any = '';                              // What bootstrap columns.
   myObs!: Subscription;
   myDatgaObs!: Subscription;
 

@@ -10,9 +10,9 @@ export class SQLDataService {
 
   public dataSubject = new BehaviorSubject<any>({});
   public pageSubject = new BehaviorSubject<any>({});
-  public paramSubject = new BehaviorSubject<any>({ page: "AAA", id: "", id2: "", id3: "" });
+  public paramSubject = new BehaviorSubject<any>({ page: "AAA", id: "", id2: "", id3: "", id_col: "id", id2_col: "", id3_col: "" });
   public routerSubject = new BehaviorSubject<any>({});
-  public containerSubject = new BehaviorSubject<any>({ id: "", id2: "", id3: "" });
+  public containerSubject = new BehaviorSubject<any>({ id: "", id2: "", id3: "", id_col: "id", id2_col: "", id3_col: "" });
 
   enData: any;
   dataValue: any = { id: "hello", id2: "world" }
@@ -215,13 +215,16 @@ export class SQLDataService {
 
   }
 
-  getData(path: any, id: any, id2: any, id3: any) {
+  getData(path: any, id: any, id2: any, id3: any, id_col: any, id_col2: any, id_col3: any) {
     this.getLocalStorage();
     const data = {
       "q" : path,
       "id": id,
       "id2": id2,
-      "id3": id3,      
+      "id3": id3, 
+      "id_col": id_col,
+      "id2_col": id_col2,
+      "id3_col": id_col3,      
       "uid": this.uid
     }
 
