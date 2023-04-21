@@ -155,7 +155,7 @@ tableRefresh() {
 }
 
 ngOnDestroy(): void {
-  this.myObs.unsubscribe();
-  this.myDataObs.unsubscribe();
+//  this.myObs.unsubscribe();
+//  this.myDataObs.unsubscribe();
 }
 }

@@ -99,7 +99,7 @@ export class SqlPanelComponent implements OnInit, DoCheck, OnChanges, AfterViewI
   }
 
   ngOnDestroy(): void {
-    this.myObs.unsubscribe();
+  //  this.myObs.unsubscribe();
   }
   
 }

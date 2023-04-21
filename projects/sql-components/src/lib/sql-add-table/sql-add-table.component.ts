@@ -234,9 +234,9 @@ export class SqlAddTableComponent implements OnInit, AfterViewInit, OnDestroy  {
   }
   
   ngOnDestroy(): void {
-      this.myObs.unsubscribe();
-      this.myDataObs.unsubscribe();
-      this.myParameterObs.unsubscribe();
+ //     this.myObs.unsubscribe();
+ //     this.myDataObs.unsubscribe();
+ //     this.myParameterObs.unsubscribe();
   }
 
   }

@@ -41,7 +41,8 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
   @Input() title: any = "";                              
   @Input() bs_row: any = 'N';                             
   @Input() bs_col: any = '';   
-  @Input() handler: any = 'default';                      
+  @Input() handler: any = 'default';        
+  @Input() reload: any = 'N';              
 
   parameters: any = { page: '', id: '', id2: '', id3: ''};
 
@@ -99,17 +100,17 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
 
   getFormData() {
     this.parameters.id=this.id;
-    this.parameters.id=this.id2;
-    this.parameters.id=this.id3;
+    this.parameters.id2=this.id2;
+    this.parameters.id3=this.id3;
     this.parameters.default_col=this.default_col;
     this.parameters.default_col2=this.default_col2;
     this.parameters.default_col3=this.default_col3;
     if (this.table!='dual') {
       this._dataService.getForm(this.table, this.parameters).subscribe((data:any)=>{
           this.data=data;
-          if (this.default_col!='') { this.data[this.default_col]=this.default_value }
-          if (this.default_col2!='') { this.data[this.default_col2]=this.default_value2 }        
-          if (this.default_col3!='') { this.data[this.default_col3]=this.default_value3 }                
+//          if (this.default_col!='') { this.data[this.default_col]=this.default_value }
+//          if (this.default_col2!='') { this.data[this.default_col2]=this.default_value2 }        
+//          if (this.default_col3!='') { this.data[this.default_col3]=this.default_value3 }
           this._dataService.pushNotification(this.data);
     });
   }
@@ -135,13 +136,25 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
         this.errorMessage='Record Saved';
       }
       
-      setTimeout(()=>{
-        this.showErrorAlert='N';
-        this.showSuccessAlert='N';
-        this.data.refresh='Y';
-        this.data.submit='N';
-        this._dataService.pushNotification(data);
-      },1000);
+      if (this.reload=='N') {
+        setTimeout(()=>{
+          this.showErrorAlert='N';
+          this.showSuccessAlert='N';
+          this.data.refresh='Y';
+          this.data.submit='N';
+          this._dataService.pushNotification(data);
+        },1000);
+      } else {
+        setTimeout(()=>{
+          this.showErrorAlert='N';
+          this.showSuccessAlert='N';
+          this.data.refresh='Y';
+          this.data.submit='N';
+          this._dataService.pushNotification(data);
+          location.reload();
+        },500);
+      }
+
 
     });
 
@@ -182,7 +195,7 @@ export class SqlFormComponent implements OnInit, DoCheck, OnChanges, AfterViewIn
 
 
   ngOnDestroy(): void {
-    this.myContainerObs.unsubscribe();
-    this.myDataObs.unsubscribe();
+//    this.myContainerObs.unsubscribe();
+//    this.myDataObs.unsubscribe();
   }
 }

@@ -90,6 +90,6 @@ export class SqlCheckboxComponent implements OnInit, AfterViewInit, OnDestroy  {
   }
 
   ngOnDestroy(): void {
-    this.myObs.unsubscribe();
+ //   this.myObs.unsubscribe();
   }
 }

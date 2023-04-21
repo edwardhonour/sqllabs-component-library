@@ -43,7 +43,7 @@ export class SqlDeleteComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.myObj.unsubscribe();
+//    this.myObj.unsubscribe();
   }
   ngOnInit(): void {
 

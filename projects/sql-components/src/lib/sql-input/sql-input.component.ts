@@ -61,6 +61,6 @@ export class SqlInputComponent implements OnInit, AfterViewInit, OnDestroy  {
   }
 
   ngOnDestroy(): void {
-    this.myObs.unsubscribe();
+//    this.myObs.unsubscribe();
   }
 }
