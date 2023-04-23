@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs';
 })
 export class SqlInputComponent implements OnInit, AfterViewInit, OnDestroy  {
 
-  value: any='';
+  va: any='';
   fieldData: any = '';
   myObs!: Subscription;
 
@@ -35,6 +35,8 @@ export class SqlInputComponent implements OnInit, AfterViewInit, OnDestroy  {
   counter: number = 0;
   @Output()
   change: EventEmitter<any> = new EventEmitter<any>();  
+  nname: any = '';
+
   
   ngAfterViewInit() {
   
@@ -45,18 +47,18 @@ export class SqlInputComponent implements OnInit, AfterViewInit, OnDestroy  {
     this.myObs = this._dataService.dataSubject.subscribe(d => {
       this.data=d;
       this.fieldData = this.data;
-      this.value = this.fieldData[this.col];
+      this.va = this.fieldData[this.col];
       this.counter++;
     })
   }
 
   ngOnInit(): void {
-
+    this.nname = 'XX' + Math.floor(Math.random() * 10000)
   }
 
   handleChange() {
      this.fieldData['submit']='N';
-     this.fieldData[this.col]=this.value;
+     this.fieldData[this.col]=this.va;
      this._dataService.pushNotification(this.fieldData);
   }
 

@@ -9,7 +9,7 @@
                 (change)="handleChange()"
                 appearance="outline">
                   <mat-label>{{ label }}</mat-label>
-                  <input [(ngModel)]="value" matInput placeholder="{{ placeholder }}">
+                  <input [name]="nname" [id]="nname" [(ngModel)]="va" autocomplete="false" matInput placeholder="{{ placeholder }}">
                       <mat-icon matSuffix>{{ icon }}</mat-icon>
                       <mat-hint>{{ hint }}</mat-hint>
               </mat-form-field>
@@ -25,7 +25,7 @@
             (change)="handleChange()"
             appearance="outline">
               <mat-label>{{ label }}</mat-label>
-              <input [(ngModel)]="value" matInput placeholder="{{ placeholder }}">
+              <input  [name]="nname" [id]="nname" [(ngModel)]="va" matInput autocomplete="false" placeholder="{{ placeholder }}">
                   <mat-icon matSuffix>{{ icon }}</mat-icon>
                   <mat-hint>{{ hint }}</mat-hint>
           </mat-form-field>
@@ -40,7 +40,7 @@
             (change)="handleChange()"
             appearance="outline">
               <mat-label>{{ label }}</mat-label>
-              <input [(ngModel)]="value" matInput placeholder="{{ placeholder }}">
+              <input  [name]="nname" [id]="nname"  [(ngModel)]="va" matInput autocomplete="false" placeholder="{{ placeholder }}">
                   <mat-icon matSuffix>{{ icon }}</mat-icon>
                   <mat-hint>{{ hint }}</mat-hint>
           </mat-form-field>
@@ -56,9 +56,9 @@
             [ngClass]="class" 
             [style]="style" appearance="fill">
               <mat-label>{{ label }}</mat-label>
-                <input [(ngModel)]="value"
-                  [(ngModel)]="value" 
-                  (change)="handleChange()"
+                <input  [name]="nname" [id]="nname"  [(ngModel)]="va"
+                  [(ngModel)]="va" 
+                  (change)="handleChange()" autocomplete="false"
                   matInput 
                   placeholder="{{ placeholder }}">
                     <mat-icon matSuffix>{{ icon }}</mat-icon>
@@ -74,9 +74,8 @@
                 [ngClass]="class" 
                 [style]="style" appearance="fill">
                   <mat-label>{{ label }}</mat-label>
-                    <input [(ngModel)]="value"
-                      [(ngModel)]="value" 
-                      (change)="handleChange()"
+                    <input  [name]="nname" [id]="nname"  [(ngModel)]="va"
+                      (change)="handleChange()" autocomplete="false"
                       matInput 
                       placeholder="{{ placeholder }}">
                         <mat-icon matSuffix>{{ icon }}</mat-icon>
@@ -90,9 +89,9 @@
               [ngClass]="class" 
               [style]="style" appearance="fill">
                 <mat-label>{{ label }}</mat-label>
-                  <input [(ngModel)]="value"
-                    [(ngModel)]="value" 
-                    (change)="handleChange()"
+                  <input  [name]="nname" [id]="nname"  [(ngModel)]="va"
+                    [(ngModel)]="va" 
+                    (change)="handleChange()" autocomplete="false"
                     matInput 
                     placeholder="{{ placeholder }}">
                       <mat-icon matSuffix>{{ icon }}</mat-icon>
